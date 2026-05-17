@@ -1,0 +1,20 @@
+{
+  "name": "weather_agent",
+  "version": "2.1.0",
+  "display_name": "Weather Agent",
+  "description": "Real-time weather forecasts and alerts for your location",
+  "author": "CommunityDev",
+  "category": "utilities",
+  "capabilities": [
+    "weather_forecast",
+    "weather_alerts",
+    "air_quality",
+    "location_weather"
+  ],
+  "permissions": [
+    "internet_access",
+    "location_access"
+  ],
+  "installed_at": "2026-05-17T10:27:24.735632",
+  "verification_status": "verified"
+}
