@@ -1,0 +1,72 @@
+{
+  "app": {
+    "name": "NEXUS",
+    "version": "1.0.0",
+    "debug": false
+  },
+  "llm": {
+    "provider": "ollama",
+    "use_in_agents": true,
+    "ollama": {
+      "base_url": "http://localhost:11434",
+      "model": "llama3",
+      "temperature": 0.7,
+      "max_tokens": 2048
+    },
+    "openai": {
+      "api_key": "",
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 2048
+    }
+  },
+  "ui": {
+    "theme": "dark",
+    "window_width": 1400,
+    "window_height": 900,
+    "font_family": "Segoe UI",
+    "font_size": 14,
+    "accent_color": "#00D4FF",
+    "glass_effect": true
+  },
+  "database": {
+    "path": "data/nexus.db",
+    "auto_backup": true
+  },
+  "memory": {
+    "max_context_length": 50,
+    "save_conversations": true,
+    "save_preferences": true
+  },
+  "agents": {
+    "file_agent": {
+      "enabled": true,
+      "watch_downloads": true
+    },
+    "web_agent": {
+      "enabled": true,
+      "default_search_engine": "duckduckgo",
+      "user_agent": "NEXUS-WebAgent/1.0"
+    },
+    "automation_agent": {
+      "enabled": true,
+      "safety_delay": 0.5,
+      "confirm_destructive": true
+    },
+    "coding_agent": {
+      "enabled": true,
+      "default_language": "python",
+      "workspace_path": ""
+    },
+    "memory_agent": {
+      "enabled": true,
+      "auto_save": true
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/nexus.log",
+    "max_size_mb": 10,
+    "backup_count": 5
+  }
+}
