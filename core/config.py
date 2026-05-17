@@ -33,7 +33,15 @@ class Config:
 
     def _default_config(self) -> dict:
         return {
-            "app": {"name": "NEXUS", "version": "1.0.0", "debug": False},
+            "app": {"name": "NEXUS", "version": "2.0.0", "debug": False},
+            "terminal": {
+                "theme": "nexus",
+                "typing_speed": 0.01,
+                "show_header": True,
+                "show_sidebar": True,
+                "show_status_bar": True,
+                "auto_complete": True,
+            },
             "llm": {
                 "provider": "ollama",
                 "use_in_agents": True,

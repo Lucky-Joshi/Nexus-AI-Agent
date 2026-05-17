@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-NEXUS - AI Desktop Operating Companion
-Main entry point for the application.
+NEXUS - AI Operating Environment
+Terminal-native AI operating companion.
 """
 
 import sys
@@ -45,7 +45,7 @@ def initialize_nexus() -> AIManager:
 
     log.info("=" * 60)
     log.info("NEXUS AI System Starting")
-    log.info(f"Version: {config.get('app.version', '1.0.0')}")
+    log.info(f"Version: {config.get('app.version', '2.0.0')}")
     log.info("=" * 60)
 
     db = Database()
@@ -113,16 +113,27 @@ def initialize_nexus() -> AIManager:
     return manager
 
 
-def run_cli_mode(manager: AIManager):
-    """Run NEXUS in CLI mode for testing."""
+def run_terminal_mode(manager: AIManager):
+    """Run NEXUS in terminal-native mode using Textual."""
+    try:
+        from terminal.app import NEXUSTerminalApp
+        app = NEXUSTerminalApp(manager)
+        app.run()
+    except ImportError:
+        print("Textual not found. Install with: pip install textual")
+        run_simple_cli(manager)
+
+
+def run_simple_cli(manager: AIManager):
+    """Fallback simple CLI mode."""
     print("\n" + "=" * 60)
-    print("  NEXUS AI - Desktop Operating Companion")
+    print("  NEXUS AI - Terminal Operating Environment")
     print("  Type 'help' for commands, 'exit' to quit")
     print("=" * 60 + "\n")
 
     while manager.is_running:
         try:
-            command = input("NEXUS> ").strip()
+            command = input("nexus> ").strip()
 
             if not command:
                 continue
@@ -132,7 +143,6 @@ def run_cli_mode(manager: AIManager):
                 break
 
             result = manager.process_command(command)
-
             print(f"\n[{result.get('agent', 'NEXUS').upper()}] {result.get('response', 'No response')}\n")
 
         except KeyboardInterrupt:
@@ -145,40 +155,16 @@ def run_cli_mode(manager: AIManager):
     print("NEXUS shutdown complete.")
 
 
-def run_gui_mode(manager: AIManager):
-    """Run NEXUS with PyQt6 GUI."""
-    try:
-        from PyQt6.QtWidgets import QApplication
-        from ui.main_window import MainWindow
-
-        app = QApplication(sys.argv)
-        app.setStyle("Fusion")
-
-        window = MainWindow(manager)
-        window.show()
-
-        sys.exit(app.exec())
-
-    except ImportError:
-        print("PyQt6 not found. Running in CLI mode.")
-        print("Install with: pip install PyQt6")
-        run_cli_mode(manager)
-
-
 def main():
     """Main entry point."""
     manager = initialize_nexus()
 
     if "--cli" in sys.argv:
-        run_cli_mode(manager)
-    elif "--gui" in sys.argv:
-        run_gui_mode(manager)
+        run_simple_cli(manager)
+    elif "--terminal" in sys.argv:
+        run_terminal_mode(manager)
     else:
-        try:
-            from PyQt6.QtWidgets import QApplication
-            run_gui_mode(manager)
-        except ImportError:
-            run_cli_mode(manager)
+        run_terminal_mode(manager)
 
 
 if __name__ == "__main__":
