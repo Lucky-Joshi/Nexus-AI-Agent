@@ -17,5 +17,6 @@ from agents.context_awareness_agent import ContextAwarenessAgent
 from agents.learning_agent import LearningAgent
 from agents.communication_bus_agent import CommunicationBusAgent
 from agents.planner_agent import PlannerAgent
+from agents.marketplace_agent import MarketplaceAgent
 
-__all__ = ["FileAgent", "WebAgent", "AutomationAgent", "CodingAgent", "MemoryAgent", "VisionAgent", "NotificationAgent", "SchedulerAgent", "KnowledgeAgent", "TerminalAgent", "PersonalityAgent", "WorkflowAgent", "SecurityAgent", "WorkflowChainAgent", "AnalyticsAgent", "ContextAwarenessAgent", "LearningAgent", "CommunicationBusAgent", "PlannerAgent"]
+__all__ = ["FileAgent", "WebAgent", "AutomationAgent", "CodingAgent", "MemoryAgent", "VisionAgent", "NotificationAgent", "SchedulerAgent", "KnowledgeAgent", "TerminalAgent", "PersonalityAgent", "WorkflowAgent", "SecurityAgent", "WorkflowChainAgent", "AnalyticsAgent", "ContextAwarenessAgent", "LearningAgent", "CommunicationBusAgent", "PlannerAgent", "MarketplaceAgent"]

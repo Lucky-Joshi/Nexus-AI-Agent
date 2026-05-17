@@ -34,6 +34,7 @@ from agents.context_awareness_agent import ContextAwarenessAgent
 from agents.learning_agent import LearningAgent
 from agents.communication_bus_agent import CommunicationBusAgent
 from agents.planner_agent import PlannerAgent
+from agents.marketplace_agent import MarketplaceAgent
 
 
 def initialize_nexus() -> AIManager:
@@ -73,6 +74,7 @@ def initialize_nexus() -> AIManager:
         LearningAgent(),
         CommunicationBusAgent(),
         PlannerAgent(),
+        MarketplaceAgent(),
     ]
 
     for agent in agents:
@@ -101,6 +103,11 @@ def initialize_nexus() -> AIManager:
     if planner_agent:
         planner_agent.set_ai_manager(manager)
         log.info("PlannerAgent connected to AIManager")
+
+    marketplace_agent = manager.agents.get("marketplace_agent")
+    if marketplace_agent:
+        marketplace_agent.set_ai_manager(manager)
+        log.info("MarketplaceAgent connected to AIManager")
 
     log.info(f"NEXUS initialized with {len(manager.agents)} agents")
     return manager
