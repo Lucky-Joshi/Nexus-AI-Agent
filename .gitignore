@@ -1,0 +1,35 @@
+# Environments
+.env
+.venv
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Databases
+*.db
+*.sqlite3
+
+# Logs
+logs/
+
+# Data
+data/screenshots/
+data/memory/
+data/knowledge_vectors/
+data/plugins/
+data/scheduler/
+analytics.db
+context.db
+learning.db
+nexus.db
+security.db
+workflow_chains.db
+
+# IDE
+.vscode/
+.idea/
