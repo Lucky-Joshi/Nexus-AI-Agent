@@ -1,0 +1,26 @@
+{
+  "name": "Design Mode",
+  "description": "Creative design workspace with Figma, assets, and inspiration boards",
+  "icon": "brush",
+  "category": "creative",
+  "aliases": ["design", "figma", "photoshop", "creative", "ui", "ux"],
+  "apps_to_launch": ["chrome", "explorer"],
+  "urls_to_open": [
+    "https://www.figma.com",
+    "https://dribbble.com",
+    "https://www.behance.net"
+  ],
+  "agents_to_activate": [],
+  "notifications_mode": "normal",
+  "focus_mode": false,
+  "timer_duration": 0,
+  "priority": 6,
+  "tags": ["design", "figma", "creative", "ui", "ux", "art"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 1},
+    {"action_type": "launch_app", "name": "Open Assets Folder", "target": "explorer", "order": 2},
+    {"action_type": "open_url", "name": "Open Figma", "target": "https://www.figma.com", "order": 3},
+    {"action_type": "open_url", "name": "Open Dribbble", "target": "https://dribbble.com", "order": 4},
+    {"action_type": "open_url", "name": "Open Behance", "target": "https://www.behance.net", "order": 5}
+  ]
+}

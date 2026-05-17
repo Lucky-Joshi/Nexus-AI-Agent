@@ -1,0 +1,24 @@
+{
+  "name": "Writing Mode",
+  "description": "Distraction-free writing environment with focus mode and grammar tools",
+  "icon": "pen",
+  "category": "creative",
+  "aliases": ["writing", "write", "author", "draft", "blog", "article"],
+  "apps_to_launch": ["notepad", "chrome"],
+  "urls_to_open": [
+    "https://www.grammarly.com"
+  ],
+  "agents_to_activate": [],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 30,
+  "priority": 7,
+  "tags": ["writing", "draft", "blog", "article", "content"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Editor", "target": "notepad", "order": 1},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 2},
+    {"action_type": "open_url", "name": "Open Grammarly", "target": "https://www.grammarly.com", "order": 3},
+    {"action_type": "set_notifications", "name": "Enable Focus Mode", "target": "focus", "order": 4},
+    {"action_type": "start_timer", "name": "Start Writing Timer", "target": "pomodoro", "params": {"duration": 30}, "order": 5}
+  ]
+}

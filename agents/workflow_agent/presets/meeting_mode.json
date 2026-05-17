@@ -1,0 +1,24 @@
+{
+  "name": "Meeting Mode",
+  "description": "Prepares video conferencing, calendar, and note-taking workspace",
+  "icon": "video",
+  "category": "communication",
+  "aliases": ["meeting", "call", "conference", "zoom", "teams"],
+  "apps_to_launch": ["zoom", "notepad", "chrome"],
+  "urls_to_open": [
+    "https://calendar.google.com"
+  ],
+  "agents_to_activate": [],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 0,
+  "priority": 7,
+  "tags": ["meeting", "call", "conference", "video", "zoom"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Zoom", "target": "zoom", "order": 1},
+    {"action_type": "launch_app", "name": "Open Notes", "target": "notepad", "order": 2},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 3},
+    {"action_type": "open_url", "name": "Open Calendar", "target": "https://calendar.google.com", "order": 4},
+    {"action_type": "set_notifications", "name": "Silence Notifications", "target": "focus", "order": 5}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Project Management Mode",
+  "description": "Project coordination workspace with task tracking, communication, and analytics",
+  "icon": "chart",
+  "category": "productivity",
+  "aliases": ["project management", "pm", "jira", "trello", "notion", "tasks"],
+  "apps_to_launch": ["chrome", "slack"],
+  "urls_to_open": [
+    "https://www.notion.so",
+    "https://trello.com"
+  ],
+  "agents_to_activate": ["scheduler_agent"],
+  "notifications_mode": "normal",
+  "focus_mode": false,
+  "timer_duration": 0,
+  "priority": 6,
+  "tags": ["project", "management", "tasks", "jira", "trello", "notion"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 1},
+    {"action_type": "launch_app", "name": "Open Slack", "target": "slack", "order": 2},
+    {"action_type": "open_url", "name": "Open Notion", "target": "https://www.notion.so", "order": 3},
+    {"action_type": "open_url", "name": "Open Trello", "target": "https://trello.com", "order": 4},
+    {"action_type": "activate_agent", "name": "Activate Scheduler Agent", "target": "scheduler_agent", "order": 5}
+  ]
+}

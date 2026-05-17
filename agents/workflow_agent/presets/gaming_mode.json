@@ -1,0 +1,22 @@
+{
+  "name": "Gaming Mode",
+  "description": "Optimized system performance for gaming - closes background apps, enables Do Not Disturb",
+  "icon": "gamepad",
+  "category": "entertainment",
+  "aliases": ["gaming", "game", "play", "fps", "performance"],
+  "apps_to_close": ["discord", "chrome", "spotify"],
+  "apps_to_launch": [],
+  "agents_to_activate": [],
+  "notifications_mode": "silent",
+  "focus_mode": true,
+  "timer_duration": 0,
+  "priority": 5,
+  "tags": ["gaming", "game", "performance", "fps", "entertainment"],
+  "actions": [
+    {"action_type": "close_app", "name": "Close Discord", "target": "discord", "order": 1},
+    {"action_type": "close_app", "name": "Close Chrome", "target": "chrome", "order": 2},
+    {"action_type": "close_app", "name": "Close Spotify", "target": "spotify", "order": 3},
+    {"action_type": "set_notifications", "name": "Enable Do Not Disturb", "target": "silent", "order": 4},
+    {"action_type": "set_focus_mode", "name": "Enable Focus Mode", "target": "true", "order": 5}
+  ]
+}

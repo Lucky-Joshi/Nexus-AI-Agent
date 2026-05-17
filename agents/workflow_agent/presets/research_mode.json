@@ -1,0 +1,30 @@
+{
+  "name": "Research Mode",
+  "description": "Multi-tab research workspace with web agent and citation collection",
+  "icon": "search",
+  "category": "research",
+  "aliases": ["research", "search", "investigate", "analyze", "study"],
+  "apps_to_launch": ["chrome", "notepad"],
+  "urls_to_open": [
+    "https://scholar.google.com",
+    "https://arxiv.org",
+    "https://github.com"
+  ],
+  "agents_to_activate": ["web_agent", "knowledge_agent"],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 30,
+  "priority": 8,
+  "tags": ["research", "search", "analysis", "citations", "sources"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 1},
+    {"action_type": "launch_app", "name": "Open Notes", "target": "notepad", "order": 2},
+    {"action_type": "open_url", "name": "Open Google Scholar", "target": "https://scholar.google.com", "order": 3},
+    {"action_type": "open_url", "name": "Open arXiv", "target": "https://arxiv.org", "order": 4},
+    {"action_type": "open_url", "name": "Open GitHub", "target": "https://github.com", "order": 5},
+    {"action_type": "activate_agent", "name": "Activate Web Agent", "target": "web_agent", "order": 6},
+    {"action_type": "activate_agent", "name": "Activate Knowledge Agent", "target": "knowledge_agent", "order": 7},
+    {"action_type": "set_notifications", "name": "Enable Focus Mode", "target": "focus", "order": 8},
+    {"action_type": "start_timer", "name": "Start Research Timer", "target": "pomodoro", "params": {"duration": 30}, "order": 9}
+  ]
+}

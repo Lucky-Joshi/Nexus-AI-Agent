@@ -1,0 +1,31 @@
+{
+  "name": "Coding Mode",
+  "description": "Optimized development environment with IDE, terminal, and documentation",
+  "icon": "code",
+  "category": "development",
+  "aliases": ["coding", "code", "dev", "developer", "program"],
+  "apps_to_launch": ["vscode", "terminal", "github desktop", "chrome"],
+  "urls_to_open": [
+    "https://stackoverflow.com",
+    "https://github.com",
+    "https://docs.python.org"
+  ],
+  "agents_to_activate": ["coding_agent", "terminal_agent"],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 25,
+  "priority": 10,
+  "tags": ["coding", "development", "programming", "software"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open VS Code", "target": "vscode", "order": 1},
+    {"action_type": "launch_app", "name": "Open Terminal", "target": "terminal", "order": 2},
+    {"action_type": "launch_app", "name": "Open GitHub Desktop", "target": "github desktop", "order": 3},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 4},
+    {"action_type": "open_url", "name": "Open Stack Overflow", "target": "https://stackoverflow.com", "order": 5},
+    {"action_type": "open_url", "name": "Open GitHub", "target": "https://github.com", "order": 6},
+    {"action_type": "activate_agent", "name": "Activate Coding Agent", "target": "coding_agent", "order": 7},
+    {"action_type": "activate_agent", "name": "Activate Terminal Agent", "target": "terminal_agent", "order": 8},
+    {"action_type": "set_notifications", "name": "Enable Focus Mode", "target": "focus", "order": 9},
+    {"action_type": "start_timer", "name": "Start Focus Timer", "target": "pomodoro", "params": {"duration": 25}, "order": 10}
+  ]
+}

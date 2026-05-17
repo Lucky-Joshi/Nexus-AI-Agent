@@ -1,0 +1,27 @@
+{
+  "name": "Study Mode",
+  "description": "Focused learning environment with notes, research, and Pomodoro timer",
+  "icon": "book",
+  "category": "learning",
+  "aliases": ["study", "learning", "revision", "exam", "homework"],
+  "apps_to_launch": ["notepad", "chrome", "explorer"],
+  "urls_to_open": [
+    "https://scholar.google.com",
+    "https://wikipedia.org"
+  ],
+  "agents_to_activate": ["knowledge_agent"],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 25,
+  "priority": 9,
+  "tags": ["study", "learning", "education", "notes", "research"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Notes", "target": "notepad", "order": 1},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 2},
+    {"action_type": "open_url", "name": "Open Google Scholar", "target": "https://scholar.google.com", "order": 3},
+    {"action_type": "open_url", "name": "Open Wikipedia", "target": "https://wikipedia.org", "order": 4},
+    {"action_type": "activate_agent", "name": "Activate Knowledge Agent", "target": "knowledge_agent", "order": 5},
+    {"action_type": "set_notifications", "name": "Silence Notifications", "target": "focus", "order": 6},
+    {"action_type": "start_timer", "name": "Start Pomodoro Timer", "target": "pomodoro", "params": {"duration": 25}, "order": 7}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Cybersecurity Mode",
+  "description": "Security operations workspace with terminals, monitoring, and OSINT resources",
+  "icon": "shield",
+  "category": "security",
+  "aliases": ["cybersecurity", "security", "hacking", "pentest", "osint", "kali"],
+  "apps_to_launch": ["terminal", "chrome", "vscode"],
+  "urls_to_open": [
+    "https://www.shodan.io",
+    "https://otx.alienvault.com",
+    "https://www.virustotal.com"
+  ],
+  "agents_to_activate": ["terminal_agent"],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 0,
+  "priority": 7,
+  "tags": ["cybersecurity", "security", "pentest", "osint", "monitoring"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Terminal", "target": "terminal", "order": 1},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 2},
+    {"action_type": "launch_app", "name": "Open VS Code", "target": "vscode", "order": 3},
+    {"action_type": "open_url", "name": "Open Shodan", "target": "https://www.shodan.io", "order": 4},
+    {"action_type": "open_url", "name": "Open AlienVault OTX", "target": "https://otx.alienvault.com", "order": 5},
+    {"action_type": "open_url", "name": "Open VirusTotal", "target": "https://www.virustotal.com", "order": 6},
+    {"action_type": "activate_agent", "name": "Activate Terminal Agent", "target": "terminal_agent", "order": 7},
+    {"action_type": "set_notifications", "name": "Enable Focus Mode", "target": "focus", "order": 8}
+  ]
+}

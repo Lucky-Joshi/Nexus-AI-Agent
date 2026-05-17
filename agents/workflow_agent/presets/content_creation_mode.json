@@ -1,0 +1,29 @@
+{
+  "name": "Content Creation Mode",
+  "description": "Creative workspace with design tools, editors, and inspiration boards",
+  "icon": "palette",
+  "category": "creative",
+  "aliases": ["content", "creation", "creator", "media", "social"],
+  "apps_to_launch": ["vscode", "chrome", "explorer"],
+  "urls_to_open": [
+    "https://www.canva.com",
+    "https://www.notion.so",
+    "https://www.pinterest.com"
+  ],
+  "agents_to_activate": ["knowledge_agent"],
+  "notifications_mode": "focus",
+  "focus_mode": true,
+  "timer_duration": 45,
+  "priority": 8,
+  "tags": ["content", "creation", "writing", "design", "social media"],
+  "actions": [
+    {"action_type": "launch_app", "name": "Open Editor", "target": "vscode", "order": 1},
+    {"action_type": "launch_app", "name": "Open Browser", "target": "chrome", "order": 2},
+    {"action_type": "open_url", "name": "Open Canva", "target": "https://www.canva.com", "order": 3},
+    {"action_type": "open_url", "name": "Open Notion", "target": "https://www.notion.so", "order": 4},
+    {"action_type": "open_url", "name": "Open Pinterest", "target": "https://www.pinterest.com", "order": 5},
+    {"action_type": "activate_agent", "name": "Activate Knowledge Agent", "target": "knowledge_agent", "order": 6},
+    {"action_type": "set_notifications", "name": "Enable Focus Mode", "target": "focus", "order": 7},
+    {"action_type": "start_timer", "name": "Start Deep Work Timer", "target": "pomodoro", "params": {"duration": 45}, "order": 8}
+  ]
+}

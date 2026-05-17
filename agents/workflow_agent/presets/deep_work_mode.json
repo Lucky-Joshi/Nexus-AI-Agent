@@ -1,0 +1,25 @@
+{
+  "name": "Deep Work Mode",
+  "description": "Maximum focus environment - closes distractions, silences notifications, starts focus timer",
+  "icon": "brain",
+  "category": "productivity",
+  "aliases": ["deep work", "focus", "concentration", "flow", "zone"],
+  "apps_to_close": ["discord", "spotify", "steam"],
+  "apps_to_launch": ["vscode", "notepad"],
+  "agents_to_activate": [],
+  "notifications_mode": "silent",
+  "focus_mode": true,
+  "timer_duration": 50,
+  "priority": 10,
+  "tags": ["deep work", "focus", "productivity", "concentration"],
+  "actions": [
+    {"action_type": "close_app", "name": "Close Discord", "target": "discord", "order": 1},
+    {"action_type": "close_app", "name": "Close Spotify", "target": "spotify", "order": 2},
+    {"action_type": "close_app", "name": "Close Steam", "target": "steam", "order": 3},
+    {"action_type": "launch_app", "name": "Open Editor", "target": "vscode", "order": 4},
+    {"action_type": "launch_app", "name": "Open Notes", "target": "notepad", "order": 5},
+    {"action_type": "set_notifications", "name": "Silence All Notifications", "target": "silent", "order": 6},
+    {"action_type": "set_focus_mode", "name": "Enable Focus Mode", "target": "true", "order": 7},
+    {"action_type": "start_timer", "name": "Start Deep Work Timer", "target": "pomodoro", "params": {"duration": 50}, "order": 8}
+  ]
+}
