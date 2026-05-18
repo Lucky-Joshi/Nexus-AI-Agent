@@ -2952,4 +2952,1280 @@ A multi-agent workflow for "analyze my codebase and create a report":
 
 ---
 
-*Continue to Part IV: Multi-Agent Orchestration →*
+## 34. WORKFLOW ENGINE
+
+### Overview
+
+The Workflow Agent (`agents/workflow_agent/`) manages user-defined workflows — sequences of commands that can be saved, edited, and executed as a unit.
+
+### What Is a Workflow
+
+A workflow is a named sequence of steps, where each step is a command executed by a specific agent. Workflows can be:
+- **Linear** — Steps execute in order
+- **Conditional** — Steps execute based on conditions
+- **Reusable** — Saved workflows can be run multiple times
+
+### Workflow Structure
+
+```json
+{
+  "id": "workflow-001",
+  "name": "Code Review",
+  "description": "Analyze code, check for issues, generate report",
+  "steps": [
+    {
+      "agent": "file_agent",
+      "command": "list files",
+      "order": 1
+    },
+    {
+      "agent": "coding_agent",
+      "command": "analyze code quality",
+      "order": 2
+    },
+    {
+      "agent": "analytics_agent",
+      "command": "generate report",
+      "order": 3
+    }
+  ],
+  "status": "active"
+}
+```
+
+### Workflow Commands
+
+| Command | Description |
+|---------|-------------|
+| `create workflow` | Create a new workflow |
+| `list workflows` | List all saved workflows |
+| `run workflow <name>` | Execute a workflow |
+| `edit workflow <name>` | Modify a workflow |
+| `delete workflow <name>` | Remove a workflow |
+| `workflow status` | Show workflow execution status |
+
+### Workflow Statuses
+
+| Status | Description |
+|--------|-------------|
+| `draft` | Workflow is being edited |
+| `active` | Workflow is ready to run |
+| `running` | Workflow is currently executing |
+| `completed` | Workflow finished successfully |
+| `failed` | Workflow encountered an error |
+| `paused` | Workflow is paused |
+
+---
+
+## 35. WORKFLOW CHAINS
+
+### Overview
+
+The Workflow Chain Agent (`agents/workflow_chain_agent/`) manages complex multi-agent execution chains with dependency tracking and error handling.
+
+### Chain Structure
+
+A workflow chain is a directed graph of agent executions:
+
+```
+User Request
+    ↓
+[File Agent] → Read files
+    ↓
+[Coding Agent] → Analyze code
+    ↓
+[Analytics Agent] → Generate metrics
+    ↓
+[Notification Agent] → Send report
+```
+
+### Chain Execution
+
+1. **Define Chain** — User or Planner Agent creates a chain
+2. **Validate** — Check that all agents exist and commands are valid
+3. **Execute** — Run steps in order (respecting dependencies)
+4. **Monitor** — Track progress of each step
+5. **Handle Errors** — Retry failed steps or replan
+
+### Chain Commands
+
+| Command | Description |
+|---------|-------------|
+| `create chain` | Create a new workflow chain |
+| `list chains` | List all chains |
+| `run chain <name>` | Execute a chain |
+| `chain status` | Show chain execution status |
+| `cancel chain <name>` | Cancel a running chain |
+
+### Error Handling in Chains
+
+If a step fails:
+1. **Retry** — The step is retried (up to 3 times)
+2. **Fallback** — An alternative command is tried
+3. **Skip** — The step is skipped (if marked as optional)
+4. **Abort** — The entire chain is aborted
+
+---
+
+## 36. PLANNING ENGINE
+
+### Overview
+
+The Planning Engine (`agents/planner_agent/planning_engine.py`) is the core of autonomous multi-agent orchestration. It decomposes goals into task chains, executes them, monitors progress, and replans when necessary.
+
+### Lifecycle
+
+```
+Create → Decompose → Execute → Monitor → Replan → Complete
+```
+
+### Planning Process
+
+1. **Goal Input** — User provides a goal (e.g., "prepare for my Python exam")
+2. **Template Matching** — Check if a built-in template matches the goal
+3. **Decomposition** — Break the goal into subtasks with dependencies
+4. **Agent Assignment** — Assign each subtask to the appropriate agent
+5. **Execution** — Run tasks respecting dependency order
+6. **Monitoring** — Track progress, detect failures
+7. **Replanning** — If conditions change, regenerate the plan
+8. **Completion** — Report results to the user
+
+### Plan Structure
+
+```python
+@dataclass
+class Plan:
+    id: str
+    name: str
+    goal: str
+    status: PlanStatus  # DRAFT, ACTIVE, PAUSED, COMPLETED, FAILED, CANCELLED
+    tasks: list[PlanTask]
+    progress: float  # 0.0 to 1.0
+    created_at: datetime
+    updated_at: datetime
+```
+
+### Task Structure
+
+```python
+@dataclass
+class PlanTask:
+    id: str
+    plan_id: str
+    description: str
+    status: TaskStatus  # PENDING, QUEUED, RUNNING, COMPLETED, FAILED, SKIPPED, BLOCKED, RETRYING
+    dependencies: list[str]  # Task IDs that must complete first
+    agent_name: str
+    order_index: int
+    result: str | None
+    error: str | None
+```
+
+### Plan Commands
+
+| Command | Description |
+|---------|-------------|
+| `create plan <goal>` | Create a new plan for a goal |
+| `list plans` | List all plans |
+| `run plan <name>` | Execute a plan |
+| `pause plan <name>` | Pause a running plan |
+| `resume plan <name>` | Resume a paused plan |
+| `cancel plan <name>` | Cancel a plan |
+| `plan status <name>` | Show plan details and progress |
+
+---
+
+## 37. GOAL DECOMPOSITION
+
+### Overview
+
+The Goal Decomposer (`agents/planner_agent/goal_decomposition.py`) breaks high-level goals into executable tasks using a 3-tier approach.
+
+### 3-Tier Decomposition
+
+```
+Goal → Template Matching → Rule-Based → LLM Fallback
+```
+
+#### Tier 1: Template Matching
+
+Built-in templates for common goal types:
+
+| Template | Goal Pattern | Tasks Generated |
+|----------|-------------|-----------------|
+| `exam_preparation` | "prepare for exam", "study for test" | Gather materials, create study plan, practice questions, review weak areas |
+| `coding_project` | "build app", "create project" | Plan architecture, set up repo, implement features, test, deploy |
+| `meeting_prep` | "prepare for meeting" | Gather agenda, review notes, prepare presentation, send reminders |
+| `system_cleanup` | "clean up system", "optimize" | Analyze disk usage, remove temp files, optimize settings, report |
+| `research_task` | "research", "learn about" | Define scope, gather sources, analyze, synthesize, report |
+| `writing_session` | "write", "draft" | Outline, research, write sections, review, finalize |
+
+#### Tier 2: Rule-Based Decomposition
+
+If no template matches, apply heuristic rules:
+- Parse goal for keywords (create, analyze, search, build, etc.)
+- Map keywords to agent capabilities
+- Generate tasks based on keyword-agent mapping
+
+#### Tier 3: LLM Fallback
+
+If rule-based decomposition fails, use the LLM:
+
+```python
+prompt = f"""
+Decompose this goal into executable tasks:
+Goal: {goal}
+
+Available agents: {agent_descriptions}
+
+Return a list of tasks with agent assignments and dependencies.
+"""
+```
+
+### Decomposition Output
+
+```json
+{
+  "goal": "Prepare for my Python exam",
+  "template": "exam_preparation",
+  "tasks": [
+    {
+      "description": "Gather study materials",
+      "agent": "web_agent",
+      "dependencies": []
+    },
+    {
+      "description": "Create study schedule",
+      "agent": "scheduler_agent",
+      "dependencies": ["task-1"]
+    },
+    {
+      "description": "Generate practice questions",
+      "agent": "coding_agent",
+      "dependencies": ["task-1"]
+    },
+    {
+      "description": "Review weak areas",
+      "agent": "knowledge_agent",
+      "dependencies": ["task-2", "task-3"]
+    }
+  ]
+}
+```
+
+---
+
+## 38. DEPENDENCY GRAPH
+
+### Overview
+
+The Dependency Graph (`agents/planner_agent/dependency_graph.py`) is a Directed Acyclic Graph (DAG) that manages task ordering, detects cycles, and identifies parallel execution opportunities.
+
+### Features
+
+- **Topological sort** — Determine execution order
+- **Cycle detection** — Prevent infinite loops
+- **Parallel levels** — Identify tasks that can run simultaneously
+- **Ready/blocked detection** — Know which tasks can start now
+
+### Graph Construction
+
+```python
+graph = DependencyGraph()
+
+# Add tasks
+graph.add_task("task-1", "Gather materials")
+graph.add_task("task-2", "Create schedule")
+graph.add_task("task-3", "Generate questions")
+graph.add_task("task-4", "Review weak areas")
+
+# Add dependencies
+graph.add_dependency("task-2", "task-1")  # task-2 depends on task-1
+graph.add_dependency("task-3", "task-1")  # task-3 depends on task-1
+graph.add_dependency("task-4", "task-2")  # task-4 depends on task-2
+graph.add_dependency("task-4", "task-3")  # task-4 depends on task-3
+```
+
+### Execution Levels
+
+The graph computes parallel execution levels:
+
+```
+Level 0: [task-1]          ← No dependencies, can start immediately
+Level 1: [task-2, task-3]  ← Both depend only on task-1, can run in parallel
+Level 2: [task-4]          ← Depends on task-2 and task-3
+```
+
+### Cycle Detection
+
+```python
+if graph.has_cycle():
+    raise CycleError("Task dependencies contain a cycle")
+```
+
+### Ready Tasks
+
+```python
+# Get tasks that can start now (all dependencies completed)
+ready_tasks = graph.get_ready_tasks(completed=["task-1"])
+# Returns: ["task-2", "task-3"]
+```
+
+### Blocked Tasks
+
+```python
+# Get tasks that are blocked by incomplete dependencies
+blocked_tasks = graph.get_blocked_tasks(completed=[])
+# Returns: ["task-2", "task-3", "task-4"]
+```
+
+---
+
+## 39. TASK EXECUTOR
+
+### Overview
+
+The Task Executor (`agents/planner_agent/task_executor.py`) handles parallel task execution with dependency-respecting scheduling, retry logic, and variable passing between tasks.
+
+### Features
+
+- **Parallel execution** — ThreadPoolExecutor with configurable max workers (default: 3)
+- **Dependency scheduling** — Tasks only start when dependencies are met
+- **Retry logic** — Failed tasks are retried with fallback commands
+- **Variable passing** — Task results can be passed to subsequent tasks via `{{variable}}` substitution
+
+### Execution Flow
+
+```python
+executor = TaskExecutor(max_workers=3)
+
+# Execute a plan
+result = executor.execute_plan(plan)
+
+# Result includes:
+# - Overall success/failure
+# - Per-task results
+# - Variables passed between tasks
+# - Execution timeline
+```
+
+### Variable Passing
+
+Tasks can reference results from previous tasks:
+
+```json
+{
+  "tasks": [
+    {
+      "description": "List files in {{directory}}",
+      "agent": "file_agent",
+      "variables": {"directory": "/tmp"}
+    },
+    {
+      "description": "Analyze {{file_count}} files",
+      "agent": "coding_agent",
+      "variables": {"file_count": "{{task-1.file_count}}"}
+    }
+  ]
+}
+```
+
+Variables are substituted before task execution:
+- `{{task-1.file_count}}` → Value from task-1's result
+- `{{directory}}` → Static variable defined in the task
+
+### Retry Logic
+
+```python
+# Default: 3 retries with fallback commands
+task = PlanTask(
+    description="Analyze code",
+    agent="coding_agent",
+    max_retries=3,
+    fallback_commands=["scan code", "review code"]
+)
+```
+
+If the primary command fails:
+1. Retry with the same command (up to `max_retries`)
+2. Try fallback commands in order
+3. Mark as failed if all attempts fail
+
+---
+
+## 40. ASYNC EXECUTION MODEL
+
+### Overview
+
+NEXUS uses asynchronous execution throughout the system to ensure the UI never blocks and tasks run efficiently in parallel.
+
+### Async Layers
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| UI | Textual (asyncio) | Non-blocking UI updates |
+| Agent Execution | asyncio | Parallel agent execution |
+| LLM Calls | async OpenAI/Ollama | Streaming responses |
+| Event Bus | ThreadPoolExecutor | Parallel subscriber dispatch |
+| Task Dispatcher | asyncio | Concurrent task execution |
+| File I/O | asyncio/threading | Non-blocking file operations |
+
+### Async Agent Execution
+
+```python
+async def handle_request(self, user_input: str) -> dict:
+    # Router determines agent (sync)
+    agent = self.router.route(user_input, self.command_index)
+    
+    # Agent executes (async)
+    result = await agent.execute(user_input)
+    
+    return result
+```
+
+### Background Tasks
+
+Tasks run in the background without blocking the UI:
+
+```python
+async def run_background_task(self):
+    while True:
+        await self._check_scheduled_tasks()
+        await asyncio.sleep(60)  # Check every minute
+```
+
+### Concurrency Limits
+
+Maximum concurrent tasks are configurable:
+
+```json
+{
+  "agents": {
+    "max_concurrent_tasks": 5
+  }
+}
+```
+
+The dispatcher respects this limit by using a semaphore:
+
+```python
+self._semaphore = asyncio.Semaphore(max_concurrent_tasks)
+
+async def execute_task(self, task):
+    async with self._semaphore:
+        return await task.agent.execute(task.command)
+```
+
+### Thread Safety
+
+Where threading is used (event bus, message broker, shared state), proper synchronization is implemented:
+
+- `threading.Lock` for mutual exclusion
+- `threading.RLock` for reentrant locking
+- `queue.Queue` for thread-safe message passing
+- `concurrent.futures.ThreadPoolExecutor` for parallel execution
+
+---
+
+## 41. CONTEXT AWARENESS
+
+### Overview
+
+The Context Awareness Agent (`agents/context_awareness_agent/`) monitors user activity, detects focus levels, identifies workflows, and triggers adaptive automation.
+
+### Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| `ContextAwarenessAgent` | `agent.py` | Main agent with 24+ command handlers |
+| `ActivityClassifier` | `services.py` | Maps apps to activity categories |
+| `ContextDetector` | `services.py` | Detects active window, running apps, system load |
+| `WorkflowDetector` | `services.py` | Matches activity patterns to known workflows |
+| `AdaptiveTriggerSystem` | `services.py` | Automates actions based on context |
+| `ContextHistory` | `services.py` | Tracks sessions and productivity |
+
+### Activity Categories
+
+The ActivityClassifier maps applications to 10 categories:
+
+| Category | Example Apps |
+|----------|-------------|
+| `coding` | VS Code, PyCharm, Vim, Terminal |
+| `browsing` | Chrome, Firefox, Safari, Edge |
+| `gaming` | Steam, Epic Games, game executables |
+| `media` | Spotify, VLC, YouTube (browser) |
+| `communication` | Slack, Discord, Teams, Outlook |
+| `writing` | Word, Google Docs, Notion |
+| `design` | Figma, Photoshop, Illustrator |
+| `file_management` | File Explorer, Finder |
+| `system_admin` | Task Manager, System Monitor |
+| `other` | Anything not categorized |
+
+### Focus Levels
+
+The ContextDetector calculates focus level based on active window, running apps, and system load:
+
+| Level | Description | Indicators |
+|-------|-------------|------------|
+| `deep` | Fully immersed in work | Single coding app, no distractions |
+| `focused` | Concentrated on task | Primary work app, minimal distractions |
+| `moderate` | Some distractions | Mix of work and non-work apps |
+| `distracted` | High distraction level | Multiple non-work apps, gaming, social media |
+| `idle` | No activity detected | No active window, low system load |
+
+### Workflow Patterns
+
+7 built-in workflow patterns:
+
+| Pattern | Trigger Conditions |
+|---------|-------------------|
+| `Coding Session` | Active window is IDE, coding apps running |
+| `Study Session` | Browser with educational sites, document apps |
+| `Gaming Session` | Game app active, gaming category |
+| `Meeting` | Video conferencing app active |
+| `Content Creation` | Design/video editing apps active |
+| `Deep Work` | Single app, high focus level, extended duration |
+| `Research` | Browser with multiple tabs, note-taking apps |
+
+### Adaptive Triggers
+
+6 default triggers:
+
+| Trigger | Condition | Action |
+|---------|-----------|--------|
+| `Gaming Silence` | Gaming detected, no audio | Suggest Do Not Disturb |
+| `Coding Suggestion` | Coding session > 2 hours | Suggest break |
+| `Study Mode` | Study session detected | Block distracting sites |
+| `Meeting Focus` | Meeting detected | Silence notifications |
+| `Deep Work Evening` | Deep work after 6 PM | Suggest wind-down |
+| `Idle Cleanup` | Idle > 30 minutes | Suggest system cleanup |
+
+### Context Commands
+
+| Command | Description |
+|---------|-------------|
+| `current context` | Show full context snapshot |
+| `active window` | Show current active window |
+| `running apps` | List running applications |
+| `activity type` | Show classified activity type |
+| `focus level` | Show current focus level |
+| `system load` | Show CPU/memory usage |
+| `suggest workflow` | Suggest workflow based on context |
+| `suggest actions` | Suggest adaptive actions |
+| `start monitoring` | Start context monitoring |
+| `stop monitoring` | Stop context monitoring |
+| `workflow patterns` | List known workflow patterns |
+| `detect workflow` | Detect current workflow |
+| `triggers` | List adaptive triggers |
+| `add trigger` | Add a new trigger |
+| `toggle trigger` | Enable/disable a trigger |
+| `context history` | Show context history |
+| `activity summary` | Show activity summary |
+| `session start` | Start a new session |
+| `session end` | End current session |
+| `context rules` | List context rules |
+| `add rule` | Add a context rule |
+| `delete rule` | Remove a context rule |
+| `cleanup` | Clean up old context data |
+
+### Database
+
+Context data is stored in `data/context.db` with 5 tables:
+- `context_snapshots` — Historical context data
+- `context_patterns` — Workflow patterns
+- `adaptive_triggers` — Trigger definitions
+- `context_sessions` — Session records with productivity scores
+- `context_rules` — User-defined rules
+
+---
+
+## 42. ACTIVITY CLASSIFICATION
+
+### Overview
+
+The ActivityClassifier (`agents/context_awareness_agent/services.py`) maps running applications to activity categories using pattern matching on window titles and process names.
+
+### Classification Process
+
+1. **Get Active Window** — Uses `pygetwindow` (Windows) or `ctypes` to get the active window title
+2. **Get Running Apps** — Uses `psutil` to enumerate running processes
+3. **Pattern Match** — Matches window titles and process names against known patterns
+4. **Return Category** — Returns the most likely activity category
+
+### Pattern Examples
+
+```python
+CODING_PATTERNS = ["vscode", "pycharm", "vim", "terminal", "code", "sublime"]
+BROWSING_PATTERNS = ["chrome", "firefox", "safari", "edge", "brave"]
+GAMING_PATTERNS = ["steam", "epic", "unity", "unreal", "game"]
+```
+
+### Confidence Scoring
+
+The classifier returns a confidence score (0.0–1.0):
+
+```python
+result = classifier.classify(active_window="Visual Studio Code", running_apps=["code", "node"])
+# Returns: {"category": "coding", "confidence": 0.95}
+```
+
+---
+
+## 43. FOCUS DETECTION
+
+### Overview
+
+Focus detection calculates the user's focus level based on multiple signals.
+
+### Signals
+
+| Signal | Weight | Source |
+|--------|--------|--------|
+| Active window category | 40% | ActivityClassifier |
+| Running app mix | 25% | psutil process list |
+| System load | 15% | psutil CPU/memory |
+| Time of day | 10% | System clock |
+| Session duration | 10% | ContextHistory |
+
+### Calculation
+
+```python
+def calculate_focus_level(active_window_category, running_apps, system_load, time_of_day, session_duration):
+    score = 0
+    
+    # Active window weight (40%)
+    if active_window_category == "coding":
+        score += 0.4
+    elif active_window_category == "browsing":
+        score += 0.2
+    elif active_window_category == "gaming":
+        score += 0.0
+    
+    # Running app mix (25%)
+    work_apps = sum(1 for app in running_apps if is_work_app(app))
+    score += 0.25 * (work_apps / len(running_apps))
+    
+    # System load (15%)
+    if system_load < 0.5:
+        score += 0.15
+    elif system_load < 0.8:
+        score += 0.1
+    
+    # Time of day (10%)
+    if 9 <= time_of_day.hour <= 17:
+        score += 0.1
+    
+    # Session duration (10%)
+    if session_duration > 30:  # minutes
+        score += 0.1
+    
+    # Map score to focus level
+    if score >= 0.8:
+        return FocusLevel.DEEP
+    elif score >= 0.6:
+        return FocusLevel.FOCUSED
+    elif score >= 0.4:
+        return FocusLevel.MODERATE
+    elif score >= 0.2:
+        return FocusLevel.DISTRACTED
+    else:
+        return FocusLevel.IDLE
+```
+
+---
+
+## 44. WORKFLOW DETECTION
+
+### Overview
+
+The WorkflowDetector (`agents/context_awareness_agent/services.py`) matches current activity patterns to known workflow templates.
+
+### Detection Process
+
+1. **Collect Context** — Get current context snapshot (active window, running apps, activity type)
+2. **Match Patterns** — Compare against known workflow patterns
+3. **Score Matches** — Calculate match confidence for each pattern
+4. **Return Best Match** — Return the highest-confidence workflow (if above threshold)
+
+### Pattern Matching
+
+```python
+def detect_workflow(context_snapshot):
+    best_match = None
+    best_score = 0
+    
+    for pattern in self.patterns:
+        score = pattern.match(context_snapshot)
+        if score > best_score and score >= self.threshold:
+            best_score = score
+            best_match = pattern
+    
+    return best_match
+```
+
+### Workflow Pattern Structure
+
+```python
+@dataclass
+class ContextPattern:
+    name: str
+    description: str
+    conditions: dict  # {"activity_type": "coding", "focus_level": "deep"}
+    min_duration: int  # Minimum minutes to confirm
+    actions: list[str]  # Suggested actions
+```
+
+---
+
+## 45. ADAPTIVE TRIGGERS
+
+### Overview
+
+The AdaptiveTriggerSystem (`agents/context_awareness_agent/services.py`) automates actions based on context changes.
+
+### Trigger Structure
+
+```python
+@dataclass
+class AdaptiveTrigger:
+    name: str
+    condition: str  # Context condition to match
+    action: str  # Action to take
+    enabled: bool
+    cooldown: int  # Minutes between triggers
+    last_triggered: datetime | None
+```
+
+### Trigger Evaluation
+
+Triggers are evaluated periodically (every 60 seconds by default):
+
+```python
+def evaluate_triggers(self, context_snapshot):
+    for trigger in self.triggers:
+        if not trigger.enabled:
+            continue
+        if trigger.is_on_cooldown():
+            continue
+        if trigger.matches(context_snapshot):
+            trigger.execute()
+            trigger.last_triggered = datetime.now()
+```
+
+### Adding Custom Triggers
+
+```
+> add trigger
+Name: Coding Break Reminder
+Condition: activity_type=coding AND session_duration>120
+Action: Suggest taking a break
+Cooldown: 60 minutes
+```
+
+---
+
+## 46. LEARNING ENGINE
+
+### Overview
+
+The Learning Engine (`agents/learning_agent/services.py`) tracks user behavior, detects patterns, generates recommendations, and predicts next actions.
+
+### Components
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| `LearningAgent` | `agent.py` | Main agent with 18 command handlers |
+| `LearningEngine` | `services.py` | Core learning orchestration |
+| `BehaviorTracker` | `services.py` | Records actions with context |
+| `PatternAnalyzer` | `services.py` | Detects patterns (frequency, sequence, time, contextual) |
+| `RecommendationEngine` | `services.py` | Generates personalized recommendations |
+| `AdaptiveWorkflowGenerator` | `services.py` | Creates workflows from patterns |
+
+### Learning Lifecycle
+
+```
+Record Behavior → Analyze Patterns → Generate Recommendations → User Feedback → Update Model
+```
+
+### Pattern Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `frequency` | Actions that occur often | "You run tests 15 times/day" |
+| `sequence` | Actions that occur in order | "You always open file → edit → save" |
+| `time_based` | Actions at specific times | "You check email at 9 AM daily" |
+| `contextual` | Actions in specific contexts | "You use web search when coding" |
+
+### Pattern Lifecycle
+
+Patterns progress through a confidence lifecycle:
+
+```
+OBSERVING → LEARNING → CONFIRMED → ACTIVE
+```
+
+| Stage | Min Occurrences | Description |
+|-------|----------------|-------------|
+| `OBSERVING` | 1–2 | Pattern detected, gathering data |
+| `LEARNING` | 3–5 | Pattern is emerging, building confidence |
+| `CONFIRMED` | 6–10 | Pattern is reliable, ready for recommendations |
+| `ACTIVE` | 10+ | Pattern is confirmed, used for predictions |
+
+---
+
+## 47. BEHAVIOR TRACKING
+
+### Overview
+
+The BehaviorTracker (`agents/learning_agent/services.py`) records every action with its preceding context.
+
+### Record Structure
+
+```python
+@dataclass
+class BehaviorRecord:
+    id: str
+    action: str  # What the user did
+    preceding_actions: list[str]  # What happened before
+    context: dict  # Activity type, focus level, time, etc.
+    timestamp: datetime
+```
+
+### Recording Actions
+
+```python
+tracker.record(
+    action="run tests",
+    preceding_actions=["open file", "edit code", "save file"],
+    context={
+        "activity_type": "coding",
+        "focus_level": "deep",
+        "time_of_day": 14,
+        "day_of_week": "Monday"
+    }
+)
+```
+
+### Frequency Tracking
+
+The tracker maintains frequency counts:
+
+```python
+# How often each action occurs
+frequency = tracker.get_action_frequency()
+# Returns: {"run tests": 15, "open file": 42, ...}
+
+# Hourly patterns
+hourly = tracker.get_hourly_pattern("run tests")
+# Returns: {9: 2, 10: 5, 14: 8, ...}
+
+# Daily patterns
+daily = tracker.get_daily_pattern("run tests")
+# Returns: {"Monday": 5, "Tuesday": 3, ...}
+```
+
+---
+
+## 48. PATTERN ANALYSIS
+
+### Overview
+
+The PatternAnalyzer (`agents/learning_agent/services.py`) detects patterns from behavior records.
+
+### Frequency Patterns
+
+```python
+patterns = analyzer.detect_frequency_patterns(records)
+# Returns: LearnedPattern(
+#   type="frequency",
+#   action="run tests",
+#   frequency=15,
+#   confidence=0.85,
+#   status="confirmed"
+# )
+```
+
+### Sequence Patterns
+
+```python
+patterns = analyzer.detect_sequence_patterns(records)
+# Returns: LearnedPattern(
+#   type="sequence",
+#   sequence=["open file", "edit code", "save file", "run tests"],
+#   confidence=0.92,
+#   status="active"
+# )
+```
+
+### Time-Based Patterns
+
+```python
+patterns = analyzer.detect_time_based_patterns(records)
+# Returns: LearnedPattern(
+#   type="time_based",
+#   action="check email",
+#   time_pattern={"hour": 9, "days": ["Monday", "Tuesday", ...]},
+#   confidence=0.78,
+#   status="confirmed"
+# )
+```
+
+### Contextual Patterns
+
+```python
+patterns = analyzer.detect_contextual_patterns(records)
+# Returns: LearnedPattern(
+#   type="contextual",
+#   action="search web",
+#   context={"activity_type": "coding", "focus_level": "focused"},
+#   confidence=0.70,
+#   status="learning"
+# )
+```
+
+### Auto-Promotion
+
+Patterns are automatically promoted through the lifecycle:
+
+```python
+def _promote_pattern(self, pattern):
+    if pattern.occurrences >= 10 and pattern.status == "confirmed":
+        pattern.status = "active"
+    elif pattern.occurrences >= 6 and pattern.status == "learning":
+        pattern.status = "confirmed"
+    elif pattern.occurrences >= 3 and pattern.status == "observing":
+        pattern.status = "learning"
+```
+
+---
+
+## 49. RECOMMENDATION ENGINE
+
+### Overview
+
+The RecommendationEngine (`agents/learning_agent/services.py`) generates personalized recommendations based on learned patterns.
+
+### Recommendation Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `workflow` | Suggest a workflow | "Create a workflow for your daily routine" |
+| `automation` | Suggest automation | "Automate your test running after saves" |
+| `optimization` | Suggest optimization | "You could batch your email checking" |
+| `habit` | Suggest habit formation | "Try coding at the same time each day" |
+| `app_suggestion` | Suggest an app | "Consider using VS Code for Python" |
+
+### Recommendation Structure
+
+```python
+@dataclass
+class Recommendation:
+    id: str
+    type: str  # workflow, automation, optimization, habit, app_suggestion
+    description: str
+    confidence: float
+    based_on: str  # Pattern that triggered this
+    status: str  # pending, accepted, dismissed
+    created_at: datetime
+```
+
+### Generating Recommendations
+
+```python
+recommendations = engine.generate_recommendations(patterns)
+# Returns: [
+#   Recommendation(
+#     type="automation",
+#     description="Auto-run tests when you save a file",
+#     confidence=0.88,
+#     based_on="sequence: edit → save → run tests"
+#   ),
+#   ...
+# ]
+```
+
+### User Feedback
+
+Users can accept or dismiss recommendations:
+
+```
+> accept recommendation 1
+> dismiss recommendation 2
+```
+
+Accepted recommendations influence future recommendations. Dismissed ones are deprioritized.
+
+---
+
+## 50. PREDICTIVE ACTIONS
+
+### Overview
+
+The AdaptiveWorkflowGenerator (`agents/learning_agent/services.py`) predicts the user's next action and generates workflows from patterns.
+
+### Next Action Prediction
+
+```python
+prediction = engine.predict_next_action(current_context)
+# Returns: Prediction(
+#   action="run tests",
+#   confidence=0.82,
+#   based_on=["edit code", "save file"],
+#   time_relevance=0.9,
+#   context_relevance=0.85
+# )
+```
+
+### Prediction Scoring
+
+Predictions are scored on:
+- **Time relevance** — How likely is this action at the current time?
+- **Context relevance** — How well does this action match the current context?
+- **Pattern confidence** — How confident is the underlying pattern?
+
+### Workflow Generation
+
+```python
+workflows = engine.generate_workflows_from_patterns(patterns)
+# Returns: [
+#   Workflow(
+#     name="Morning Routine",
+#     steps=[
+#       {"agent": "file_agent", "command": "check inbox"},
+#       {"agent": "scheduler_agent", "command": "show today's meetings"},
+#       {"agent": "terminal_agent", "command": "run system health check"}
+#     ]
+#   ),
+#   ...
+# ]
+```
+
+### Daily Routine Generation
+
+```python
+routine = engine.generate_daily_routine()
+# Returns a workflow based on the user's typical daily pattern
+```
+
+### Prediction Accuracy Tracking
+
+```python
+# Log prediction accuracy
+engine.log_prediction(prediction, actual_action="run tests")
+# Accuracy is tracked and reported in learning stats
+```
+
+### Learning Commands
+
+| Command | Description |
+|---------|-------------|
+| `start learning` | Enable behavior tracking |
+| `stop learning` | Disable behavior tracking |
+| `analyze` | Analyze behavior and detect patterns |
+| `patterns` | Show learned patterns |
+| `habits` | Show detected habits |
+| `recommendations` | Show recommendations |
+| `accept recommendation <n>` | Accept a recommendation |
+| `dismiss recommendation <n>` | Dismiss a recommendation |
+| `predict` | Predict next action |
+| `behavior history` | Show behavior history |
+| `learning stats` | Show learning statistics |
+| `generate workflow` | Generate workflow from patterns |
+| `daily routine` | Generate daily routine |
+| `most common` | Show most common actions |
+| `hourly pattern` | Show hourly pattern for an action |
+| `daily pattern` | Show daily pattern for an action |
+| `prediction accuracy` | Show prediction accuracy |
+| `cleanup` | Clean up old learning data |
+
+---
+
+## 51. MEMORY AGENT
+
+### Overview
+
+The Memory Agent (`agents/memory_agent/`) manages long-term memory, semantic search, and conversation history.
+
+### Capabilities
+
+- **Conversation Memory** — Stores and retrieves past conversations
+- **Semantic Search** — Search memory by meaning, not just keywords
+- **Fact Storage** — Store and retrieve facts
+- **Context Recall** — Recall relevant context for current conversation
+
+### Memory Commands
+
+| Command | Description |
+|---------|-------------|
+| `save memory` | Save a fact or note to memory |
+| `search memory` | Search memory semantically |
+| `list memories` | List all stored memories |
+| `delete memory` | Remove a memory |
+| `recall` | Recall relevant memories for context |
+| `memory stats` | Show memory statistics |
+
+### Vector Storage
+
+The Memory Agent uses vector embeddings for semantic search:
+- Text is converted to embeddings using the LLM provider
+- Embeddings are stored in the database
+- Search queries are converted to embeddings and compared using cosine similarity
+
+### Memory Structure
+
+```python
+@dataclass
+class Memory:
+    id: str
+    content: str
+    embedding: list[float]  # Vector embedding
+    timestamp: datetime
+    tags: list[str]
+    importance: float  # 0.0 to 1.0
+```
+
+---
+
+## 52. KNOWLEDGE AGENT
+
+### Overview
+
+The Knowledge Agent (`agents/knowledge_agent/`) manages a knowledge base of documents, articles, and reference material.
+
+### Capabilities
+
+- **Document Storage** — Store and organize documents
+- **Knowledge Retrieval** — Search and retrieve relevant knowledge
+- **Summarization** — Summarize documents
+- **Cross-Reference** — Link related knowledge items
+
+### Knowledge Commands
+
+| Command | Description |
+|---------|-------------|
+| `add knowledge` | Add a document or note to knowledge base |
+| `search knowledge` | Search the knowledge base |
+| `list knowledge` | List all knowledge items |
+| `summarize` | Summarize a knowledge item |
+| `delete knowledge` | Remove a knowledge item |
+| `knowledge stats` | Show knowledge base statistics |
+
+### Knowledge Structure
+
+```python
+@dataclass
+class KnowledgeItem:
+    id: str
+    title: str
+    content: str
+    source: str  # URL, file path, or manual entry
+    tags: list[str]
+    created_at: datetime
+    updated_at: datetime
+```
+
+---
+
+## 53. SEMANTIC SEARCH
+
+### Overview
+
+Semantic search finds results by meaning, not just keyword matching.
+
+### How It Works
+
+1. **Index** — All content is converted to vector embeddings
+2. **Query** — Search query is converted to an embedding
+3. **Compare** — Cosine similarity finds the most relevant results
+4. **Rank** — Results are ranked by similarity score
+
+### Similarity Calculation
+
+```python
+def cosine_similarity(a, b):
+    dot_product = sum(x * y for x, y in zip(a, b))
+    magnitude_a = math.sqrt(sum(x ** 2 for x in a))
+    magnitude_b = math.sqrt(sum(x ** 2 for x in b))
+    return dot_product / (magnitude_a * magnitude_b)
+```
+
+### Search Commands
+
+Both Memory Agent and Knowledge Agent support semantic search:
+
+```
+> search memory "how do I run tests"
+> search knowledge "Python async patterns"
+```
+
+---
+
+## 54. VECTOR STORAGE
+
+### Overview
+
+Vector embeddings are stored in SQLite databases alongside the original text.
+
+### Storage Strategy
+
+```sql
+CREATE TABLE memories (
+    id TEXT PRIMARY KEY,
+    content TEXT NOT NULL,
+    embedding TEXT,  -- JSON array of floats
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tags TEXT,
+    importance REAL
+);
+```
+
+Embeddings are stored as JSON arrays of floats:
+```json
+[0.123, -0.456, 0.789, ...]
+```
+
+### Performance Considerations
+
+- Embedding generation requires an LLM call (slow)
+- Embeddings are cached and reused
+- Search is fast (cosine similarity on pre-computed vectors)
+- For large datasets, consider a dedicated vector database
+
+---
+
+## 55. CONVERSATION HISTORY
+
+### Overview
+
+All conversations are persisted in `data/nexus.db` for future reference.
+
+### Storage
+
+```sql
+CREATE TABLE conversations (
+    id TEXT PRIMARY KEY,
+    user_message TEXT NOT NULL,
+    agent_response TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    agent_name TEXT,
+    session_id TEXT
+);
+```
+
+### Retrieval
+
+```
+> show conversations      # List recent conversations
+> search conversations    # Search conversation history
+```
+
+### Session Management
+
+Conversations are grouped by session:
+- Each NEXUS launch creates a new session
+- Sessions have a unique ID
+- Conversations within a session share the same `session_id`
+
+---
+
+*Continue to Part VI: Productivity Tools →*
