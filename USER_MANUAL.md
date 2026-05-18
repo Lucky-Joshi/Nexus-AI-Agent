@@ -1,147 +1,9 @@
----
-title: "NEXUS User Manual"
-subtitle: "The Terminal-Native AI Operating Environment — Version 1.0"
-author: "NEXUS Project"
-date: "2026-05-18"
-subject: "AI Operating Environment"
-keywords: "NEXUS, AI, Terminal, Multi-Agent, Orchestration, LLM, Automation"
-lang: "en"
-toc: false
-toc-title: "Table of Contents"
-titlepage: false
-colorlinks: true
-header-includes: |
-  \usepackage{fancyhdr}
-  \pagestyle{fancy}
-  \fancyhead[LO]{NEXUS User Manual}
-  \fancyhead[RE]{\leftmark}
-  \fancyfoot[C]{\thepage}
-  \usepackage{xcolor}
-  \definecolor{nexusblue}{HTML}{4A90D9}
-  \definecolor{nexusgreen}{HTML}{50C878}
-  \definecolor{nexusdark}{HTML}{1A1A2E}
-  \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-  \renewcommand{\sectionmark}[1]{\markright{#1}}
-geometry: "top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm"
-mainfont: "Helvetica Neue"
-monofont: "JetBrains Mono"
-fontsize: 11pt
-linestretch: 1.15
----
+# NEXUS USER MANUAL
 
-<!-- NEXUS USER MANUAL — Print-Ready Edition -->
-<!-- Generated: May 18, 2026 -->
-<!-- PDF Export Optimized -->
-
-<div style="page-break-after: always; text-align: center; padding-top: 15vh;">
-
-<br><br><br>
-
-# NEXUS
-
-<br>
-
-## User Manual
-
-<br><br>
-
-### The Terminal-Native AI Operating Environment
-
-<br><br><br>
+> **The Terminal-Native AI Operating Environment**  
+> Version 1.0 — Official Handbook
 
 ---
-
-<br>
-
-**Version 1.0 — Official Handbook**
-
-**Enterprise Technical Reference**
-
-<br><br>
-
-> *"An intelligent environment you inhabit, not a tool you visit."*
-
-<br><br><br>
-
----
-
-<br>
-
-| | |
-|---|---|
-| **Product** | NEXUS AI Operating Environment |
-| **Version** | 1.0.0 |
-| **Document Type** | Official User Manual |
-| **Classification** | Enterprise Technical Reference |
-| **Generated** | May 18, 2026 |
-| **Format** | Print-Ready PDF Edition |
-
-<br><br><br>
-
----
-
-<br>
-
-**CONFIDENTIAL — FOR AUTHORIZED USE ONLY**
-
-<br><br><br>
-
-</div>
-
-<div style="page-break-before: always;"></div>
-
-<div style="page-break-after: always; padding-top: 10vh;">
-
-# NEXUS User Manual
-
-## Version 1.0 — Official Handbook
-
-<br><br>
-
-**The Terminal-Native AI Operating Environment**
-
-<br><br><br>
-
----
-
-<br>
-
-Copyright &copy; 2026 NEXUS Project. All rights reserved.
-
-This document is the official user manual for the NEXUS AI Operating Environment.
-No part of this publication may be reproduced, distributed, or transmitted in any
-form or by any means without prior written permission.
-
-NEXUS is provided "as is" without warranty of any kind, either express or implied.
-
-<br><br>
-
----
-
-<br>
-
-**Document Information**
-
-| | |
-|---|---|
-| Document ID | NEXUS-UM-1.0 |
-| Version | 1.0.0 |
-| Status | Published |
-| Classification | Public |
-| Pages | ~200+ (PDF) |
-| Format | Markdown / PDF |
-
-</div>
-
-<div style="page-break-before: always;"></div>
-
-<div style="page-break-before: always;"></div>
-
-<div style="page-break-after: always;">
-
-# Table of Contents
-
-<br>
 
 ## TABLE OF CONTENTS
 
@@ -258,55 +120,6 @@ F. [Index](#appendix-f-index)
 
 ---
 
-
-</div>
-
-<div style="page-break-before: always;"></div>
-
-<!--
-PDF EXPORT INSTRUCTIONS
-=======================
-
-This document is optimized for PDF conversion. Use one of these tools:
-
-1. Pandoc (recommended):
-   pandoc USER_MANUAL_PDF.md -o NEXUS_User_Manual.pdf \
-     --pdf-engine=xelatex \
-     --variable geometry:margin=1in \
-     --toc
-
-2. VSCode Markdown PDF extension:
-   Right-click → Markdown PDF: Export (pdf)
-
-3. Typora:
-   File → Export → PDF
-
-4. md-to-pdf:
-   npx md-to-pdf USER_MANUAL_PDF.md
-
-5. WeasyPrint:
-   weasyprint USER_MANUAL_PDF.html NEXUS_User_Manual.pdf
-
-PAGE BREAK MARKERS
-==================
-- <div style="page-break-before: always;"></div> — Forces new page
-- <div style="page-break-after: always;"></div> — Ends current page
-
-COMPATIBILITY
-=============
-- Pandoc ✓
-- VSCode Markdown PDF ✓
-- Typora ✓
-- WeasyPrint ✓
-- wkhtmltopdf ✓
-- mdpdf ✓
-- Obsidian Export ✓
--->
-
-
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PREFACE -->
 ## 1. PREFACE
 
 Welcome to NEXUS — a terminal-native AI operating environment designed to transform how you interact with artificial intelligence. This manual is the definitive reference for understanding, configuring, and mastering every aspect of the system.
@@ -336,9 +149,6 @@ You can read linearly from start to finish, or use the table of contents to jump
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: VISION & PHILOSOPHY -->
 ## 2. VISION & PHILOSOPHY
 
 ### The Vision
@@ -367,9 +177,6 @@ Every plugin runs in a sandboxed environment. The security agent monitors for th
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: WHAT IS NEXUS -->
 ## 3. WHAT IS NEXUS
 
 NEXUS is a **Python-based, terminal-native AI operating environment** that provides:
@@ -392,9 +199,6 @@ NEXUS is a **Python-based, terminal-native AI operating environment** that provi
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CORE PRINCIPLES -->
 ## 4. CORE PRINCIPLES
 
 1. **Modularity** — Every component is a self-contained module. Agents, plugins, screens, and services can be developed, tested, and deployed independently.
@@ -413,9 +217,6 @@ NEXUS is a **Python-based, terminal-native AI operating environment** that provi
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SYSTEM OVERVIEW -->
 ## 5. SYSTEM OVERVIEW
 
 ### Directory Structure
@@ -531,9 +332,6 @@ NEXUS/
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ARCHITECTURE AT A GLANCE -->
 ## 6. ARCHITECTURE AT A GLANCE
 
 ### High-Level Architecture
@@ -615,9 +413,6 @@ User Input → Router → Agent → LLM Provider → Response → UI
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SYSTEM REQUIREMENTS -->
 ## 7. SYSTEM REQUIREMENTS
 
 ### Minimum Requirements
@@ -660,28 +455,22 @@ All dependencies are listed in `requirements.txt`. Key packages include:
 | `pyautogui` | GUI automation |
 
 Install all dependencies with:
-<!-- page-break-inside: avoid -->
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: INSTALLATION -->
 ## 8. INSTALLATION
 
 ### Step 1: Clone or Download
 
-<!-- page-break-inside: avoid -->
 ```bash
 cd C:\Users\lucky\OneDrive\Desktop\ai-agents\NEXUS
 ```
 
 ### Step 2: Create Virtual Environment (Recommended)
 
-<!-- page-break-inside: avoid -->
 ```bash
 python -m venv venv
 # Windows:
@@ -692,7 +481,6 @@ source venv/bin/activate
 
 ### Step 3: Install Dependencies
 
-<!-- page-break-inside: avoid -->
 ```bash
 pip install -r requirements.txt
 ```
@@ -701,7 +489,6 @@ pip install -r requirements.txt
 
 Create or edit `.env` in the root directory:
 
-<!-- page-break-inside: avoid -->
 ```env
 # OpenAI Configuration (optional)
 OPENAI_API_KEY=your-api-key-here
@@ -719,7 +506,6 @@ DEFAULT_PROVIDER=ollama
 
 Edit `config/settings.json`:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "llm": {
@@ -742,34 +528,27 @@ Edit `config/settings.json`:
 
 ### Step 6: Launch
 
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py
 ```
 
 With verbose logging:
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --verbose
 ```
 
 With debug logging:
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --debug
 ```
 
 CLI mode (no UI):
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --cli
 ```
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CONFIGURATION -->
 ## 9. CONFIGURATION
 
 ### Configuration File: `config/settings.json`
@@ -778,7 +557,6 @@ The main configuration file controls all aspects of NEXUS behavior.
 
 #### LLM Settings
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "llm": {
@@ -805,7 +583,6 @@ The main configuration file controls all aspects of NEXUS behavior.
 
 #### UI Settings
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "ui": {
@@ -826,7 +603,6 @@ The main configuration file controls all aspects of NEXUS behavior.
 
 #### Agent Settings
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "agents": {
@@ -869,7 +645,6 @@ The main configuration file controls all aspects of NEXUS behavior.
 
 The `Config` class is a singleton. Access it from anywhere:
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.config import config
 
@@ -879,9 +654,6 @@ theme = config.get("ui.theme")
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: FIRST LAUNCH -->
 ## 10. FIRST LAUNCH
 
 ### The Startup Sequence
@@ -916,9 +688,6 @@ Press `[Enter]` on any quick command to execute it, or type a command in the inp
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: THE CINEMATIC STARTUP EXPERIENCE -->
 ## 11. THE CINEMATIC STARTUP EXPERIENCE
 
 ### Overview
@@ -931,7 +700,6 @@ NEXUS features a cinematic startup sequence that transforms the typically boring
 
 The main loader class that orchestrates the startup sequence:
 
-<!-- page-break-inside: avoid -->
 ```python
 from terminal.loader import CinematicLoader
 
@@ -950,7 +718,6 @@ Features:
 
 Context manager for tracking initialization phases:
 
-<!-- page-break-inside: avoid -->
 ```python
 with loader.phase_tracker("Core Systems", total_steps=4) as tracker:
     tracker.advance("Initializing logger...")
@@ -969,7 +736,6 @@ Features:
 
 Lightweight tracker for individual steps within a phase:
 
-<!-- page-break-inside: avoid -->
 ```python
 with loader.step_tracker("Agent Registry") as tracker:
     tracker.advance("Loading file_agent...")
@@ -981,7 +747,6 @@ with loader.step_tracker("Agent Registry") as tracker:
 
 During normal startup, Python warnings and INFO-level logs are suppressed:
 
-<!-- page-break-inside: avoid -->
 ```python
 from terminal.loader import suppress_output
 
@@ -1004,7 +769,6 @@ When launched with `--verbose` or `--debug`, output suppression is disabled:
 
 The loader's appearance can be customized in `config/settings.json`:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "ui": {
@@ -1018,14 +782,10 @@ Set `show_loader` to `false` to skip the cinematic loader entirely.
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: COMMAND-LINE INTERFACE -->
 ## 12. COMMAND-LINE INTERFACE
 
 ### Basic Usage
 
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py                    # Launch with cinematic loader
 python main.py --verbose          # Show INFO logs during startup
@@ -1047,7 +807,6 @@ python main.py -d                 # Short form of --debug
 
 When launched with `--cli`, NEXUS runs in a simple command-line mode without the Textual UI:
 
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --cli
 ```
@@ -1074,7 +833,6 @@ In CLI mode, you can use any NEXUS command:
 
 CLI flags can also be controlled via environment variables:
 
-<!-- page-break-inside: avoid -->
 ```bash
 NEXUS_LOG_LEVEL=DEBUG python main.py
 NEXUS_SHOW_LOADER=false python main.py
@@ -1086,9 +844,6 @@ NEXUS_SHOW_LOADER=false python main.py
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: TERMINAL UI ARCHITECTURE -->
 ## 13. TERMINAL UI ARCHITECTURE
 
 ### Overview
@@ -1099,7 +854,6 @@ NEXUS uses the **Textual** framework (version 8.2.6) to build a rich, interactiv
 
 The main application is defined in `terminal/app.py`:
 
-<!-- page-break-inside: avoid -->
 ```python
 class NexusApp(App):
     """Main NEXUS Textual application."""
@@ -1115,7 +869,6 @@ Key components:
 
 Screens are explicitly installed rather than using the `SCREENS` dict:
 
-<!-- page-break-inside: avoid -->
 ```python
 def on_mount(self) -> None:
     dashboard = DashboardScreen(manager=self.manager)
@@ -1140,7 +893,6 @@ This pattern ensures:
 
 Themes are registered using the modern Textual API:
 
-<!-- page-break-inside: avoid -->
 ```python
 def on_mount(self) -> None:
     self.register_theme(NEXUS_DARK_THEME)
@@ -1179,7 +931,6 @@ App
 **`Static.update()` requires Rich renderables**  
 When updating a `Static` widget, you must pass a Rich renderable or string. Custom widgets that override `render()` must call `.render()` explicitly:
 
-<!-- page-break-inside: avoid -->
 ```python
 # Correct:
 header_widget.update(header.render())
@@ -1191,7 +942,6 @@ header_widget.update(header)
 **`install_screen()` vs `SCREENS` dict**  
 Textual supports both patterns, but `install_screen()` is required when you need to inject dependencies:
 
-<!-- page-break-inside: avoid -->
 ```python
 # Correct (dependency injection):
 dashboard = DashboardScreen(manager=self.manager)
@@ -1203,9 +953,6 @@ SCREENS = {"dashboard": DashboardScreen}  # manager not available
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: DASHBOARD SCREEN -->
 ## 14. DASHBOARD SCREEN
 
 ### Overview
@@ -1241,7 +988,6 @@ The Dashboard Screen (`terminal/screens/dashboard.py`) is the default screen sho
 
 The dashboard uses a `compose()` method to instantiate all widgets:
 
-<!-- page-break-inside: avoid -->
 ```python
 def compose(self) -> ComposeResult:
     yield Static("NEXUS Dashboard", id="title")
@@ -1309,9 +1055,6 @@ Real-time log of system events:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CHAT INTERFACE -->
 ## 15. CHAT INTERFACE
 
 ### Overview
@@ -1383,9 +1126,6 @@ Conversations are saved to `data/nexus.db` in the `conversations` table. Each co
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: TASK MONITOR -->
 ## 16. TASK MONITOR
 
 ### Overview
@@ -1464,9 +1204,6 @@ Tasks can be filtered by:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: THEME SYSTEM -->
 ## 17. THEME SYSTEM
 
 ### Overview
@@ -1477,7 +1214,6 @@ NEXUS supports multiple visual themes that control the appearance of the termina
 
 #### NEXUS Dark (Default)
 
-<!-- page-break-inside: avoid -->
 ```python
 NEXUS_DARK_THEME = Theme(
     name="nexus-dark",
@@ -1501,7 +1237,6 @@ NEXUS_DARK_THEME = Theme(
 
 #### NEXUS Light
 
-<!-- page-break-inside: avoid -->
 ```python
 NEXUS_LIGHT_THEME = Theme(
     name="nexus-light",
@@ -1527,7 +1262,6 @@ NEXUS_LIGHT_THEME = Theme(
 
 Themes can be switched at runtime:
 
-<!-- page-break-inside: avoid -->
 ```python
 # From within the app:
 self.app.theme = "nexus-light"
@@ -1561,7 +1295,6 @@ Each theme defines the following color variables:
 
 You can create custom themes by defining a new `Theme` object and registering it:
 
-<!-- page-break-inside: avoid -->
 ```python
 from textual.theme import Theme
 
@@ -1578,9 +1311,6 @@ self.register_theme(MY_THEME)
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: STREAMING RESPONSES -->
 ## 18. STREAMING RESPONSES
 
 ### Overview
@@ -1596,7 +1326,6 @@ The streaming module (`terminal/streaming.py`) handles real-time streaming of LL
 
 ### Implementation
 
-<!-- page-break-inside: avoid -->
 ```python
 async def stream_response(self, response_generator) -> str:
     """Stream LLM response to UI in real-time."""
@@ -1639,9 +1368,6 @@ If streaming is disabled or unavailable:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: KEYBOARD NAVIGATION -->
 ## 19. KEYBOARD NAVIGATION
 
 ### Global Shortcuts
@@ -1695,9 +1421,6 @@ Textual manages focus automatically:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CUSTOM WIDGETS -->
 ## 20. CUSTOM WIDGETS
 
 ### Overview
@@ -1708,7 +1431,6 @@ NEXUS defines custom widgets in `terminal/widgets.py` to provide consistent styl
 
 A custom header widget that renders a styled panel with the NEXUS title and status:
 
-<!-- page-break-inside: avoid -->
 ```python
 class NexusHeader(Static):
     def render(self) -> Panel:
@@ -1721,7 +1443,6 @@ class NexusHeader(Static):
 
 **Important**: When updating a `Static` widget containing a `NexusHeader`, you must call `.render()`:
 
-<!-- page-break-inside: avoid -->
 ```python
 header = NexusHeader()
 widget.update(header.render())  # Correct
@@ -1732,7 +1453,6 @@ widget.update(header)           # Wrong — causes crash
 
 A custom status bar widget that shows real-time system information:
 
-<!-- page-break-inside: avoid -->
 ```python
 class NexusStatusBar(Static):
     def render(self) -> Panel:
@@ -1752,9 +1472,6 @@ All custom widgets follow the same pattern:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: BASE AGENT ARCHITECTURE -->
 ## 21. BASE AGENT ARCHITECTURE
 
 ### Overview
@@ -1763,7 +1480,6 @@ All 21 agents in NEXUS extend the abstract `BaseAgent` class defined in `core/ba
 
 ### BaseAgent Class
 
-<!-- page-break-inside: avoid -->
 ```python
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -1816,7 +1532,6 @@ class BaseAgent(ABC):
 
 All agents return results in a standard format:
 
-<!-- page-break-inside: avoid -->
 ```python
 {
     "success": True,
@@ -1844,7 +1559,6 @@ agent_name/
 
 To create a new agent:
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.base_agent import BaseAgent, AgentStatus
 
@@ -1877,9 +1591,6 @@ class MyAgent(BaseAgent):
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: AI MANAGER -->
 ## 22. AI MANAGER
 
 ### Overview
@@ -1897,7 +1608,6 @@ The `AIManager` (`manager/manager.py`) is the central orchestrator of NEXUS. It 
 
 ### Initialization
 
-<!-- page-break-inside: avoid -->
 ```python
 class AIManager:
     def __init__(self):
@@ -1917,7 +1627,6 @@ class AIManager:
 
 Agents are discovered by scanning the `agents/` directory:
 
-<!-- page-break-inside: avoid -->
 ```python
 def _discover_agents(self) -> None:
     for agent_dir in os.listdir("agents"):
@@ -1932,7 +1641,6 @@ def _discover_agents(self) -> None:
 
 The command index maps command patterns to agents:
 
-<!-- page-break-inside: avoid -->
 ```python
 def _build_command_index(self) -> None:
     for agent in self.agents.values():
@@ -1942,7 +1650,6 @@ def _build_command_index(self) -> None:
 
 ### Request Handling
 
-<!-- page-break-inside: avoid -->
 ```python
 async def handle_request(self, user_input: str) -> dict:
     """Route user input to the appropriate agent."""
@@ -1972,9 +1679,6 @@ async def handle_request(self, user_input: str) -> dict:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: INTENT ROUTER -->
 ## 23. INTENT ROUTER
 
 ### Overview
@@ -1991,7 +1695,6 @@ User Input → Stage 1: Regex → Stage 2: Fuzzy → Stage 3: LLM → Agent
 
 Fast, pattern-based matching for common commands:
 
-<!-- page-break-inside: avoid -->
 ```python
 REGEX_PATTERNS = {
     r"list\s+files?": "file_agent",
@@ -2011,7 +1714,6 @@ REGEX_PATTERNS = {
 
 Fuzzy string matching for commands that are close to known patterns:
 
-<!-- page-break-inside: avoid -->
 ```python
 from difflib import SequenceMatcher
 
@@ -2034,7 +1736,6 @@ def fuzzy_match(input: str, commands: list[str], threshold: float = 0.7) -> str 
 
 Uses the LLM to classify ambiguous requests:
 
-<!-- page-break-inside: avoid -->
 ```python
 async def llm_classify(input: str, agents: list[BaseAgent]) -> BaseAgent:
     prompt = f"""
@@ -2054,7 +1755,6 @@ async def llm_classify(input: str, agents: list[BaseAgent]) -> BaseAgent:
 
 The router can be configured in `config/settings.json`:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "router": {
@@ -2082,9 +1782,6 @@ The router can be configured in `config/settings.json`:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: TASK DISPATCHER -->
 ## 24. TASK DISPATCHER
 
 ### Overview
@@ -2109,7 +1806,6 @@ The Dispatcher (`manager/dispatcher.py`) handles asynchronous task execution, ma
 
 Tasks are queued with priority levels:
 
-<!-- page-break-inside: avoid -->
 ```python
 class TaskPriority(Enum):
     CRITICAL = 0
@@ -2121,7 +1817,6 @@ class TaskPriority(Enum):
 
 ### Task Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class Task:
@@ -2153,7 +1848,6 @@ class Task:
 
 The dispatcher uses `asyncio` for non-blocking execution:
 
-<!-- page-break-inside: avoid -->
 ```python
 async def dispatch(self, agent: BaseAgent, command: str) -> Task:
     task = Task(
@@ -2185,7 +1879,6 @@ async def worker(self) -> None:
 
 Maximum concurrent tasks are configurable:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "agents": {
@@ -2200,7 +1893,6 @@ The dispatcher spawns N worker coroutines based on this setting.
 
 Failed tasks are automatically retried:
 
-<!-- page-break-inside: avoid -->
 ```python
 if task.status == TaskStatus.FAILED and task.retry_count < task.max_retries:
     task.retry_count += 1
@@ -2212,9 +1904,6 @@ Default: 3 retries with exponential backoff.
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: LLM PROVIDER -->
 ## 25. LLM PROVIDER
 
 ### Overview
@@ -2231,7 +1920,6 @@ The LLM Provider (`core/llm_provider.py`) abstracts the interaction with languag
 
 ### Provider Configuration
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "llm": {
@@ -2259,8 +1947,7 @@ The LLM Provider (`core/llm_provider.py`) abstracts the interaction with languag
 2. Pull a model: `ollama pull llama3`
 3. Start Ollama: `ollama serve`
 4. Configure NEXUS:
-   <!-- page-break-inside: avoid -->
-```json
+   ```json
    {
      "llm": {
        "provider": "ollama",
@@ -2273,14 +1960,12 @@ The LLM Provider (`core/llm_provider.py`) abstracts the interaction with languag
 
 1. Get an API key: https://platform.openai.com
 2. Set in `.env`:
-   <!-- page-break-inside: avoid -->
-```env
+   ```env
    OPENAI_API_KEY=sk-...
    OPENAI_MODEL=gpt-4
    ```
 3. Configure NEXUS:
-   <!-- page-break-inside: avoid -->
-```json
+   ```json
    {
      "llm": {
        "provider": "openai",
@@ -2293,13 +1978,11 @@ The LLM Provider (`core/llm_provider.py`) abstracts the interaction with languag
 
 For any OpenAI-compatible API:
 
-<!-- page-break-inside: avoid -->
 ```env
 OPENAI_BASE_URL=http://your-api:8080/v1
 OPENAI_API_KEY=your-key
 ```
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "llm": {
@@ -2313,7 +1996,6 @@ OPENAI_API_KEY=your-key
 
 The provider supports streaming for real-time responses:
 
-<!-- page-break-inside: avoid -->
 ```python
 async for chunk in llm_provider.generate_stream(prompt):
     print(chunk.choices[0].delta.content, end="")
@@ -2330,9 +2012,6 @@ The provider handles common errors gracefully:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CONFIGURATION SYSTEM -->
 ## 26. CONFIGURATION SYSTEM
 
 ### Overview
@@ -2347,7 +2026,6 @@ The Configuration system (`core/config.py`) is a singleton that loads and manage
 
 ### Singleton Pattern
 
-<!-- page-break-inside: avoid -->
 ```python
 class Config:
     _instance = None
@@ -2369,7 +2047,6 @@ class Config:
 
 ### Access Pattern
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.config import config
 
@@ -2386,7 +2063,6 @@ model = config.get("llm.model", default="llama3")
 
 The config can be reloaded at runtime:
 
-<!-- page-break-inside: avoid -->
 ```python
 config.reload()
 ```
@@ -2397,7 +2073,6 @@ This is useful when the settings file is modified externally.
 
 The config validates required keys on load:
 
-<!-- page-break-inside: avoid -->
 ```python
 required_keys = ["llm.provider", "llm.model"]
 for key in required_keys:
@@ -2407,9 +2082,6 @@ for key in required_keys:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: LOGGING SYSTEM -->
 ## 27. LOGGING SYSTEM
 
 ### Overview
@@ -2434,7 +2106,6 @@ The Logging system (`core/logger.py`) provides dynamic log level control with se
 
 ### Mode Switching
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.logger import logger
 
@@ -2452,7 +2123,6 @@ logger.set_mode("debug")     # Console: DEBUG
 
 During startup, console output is suppressed:
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.logger import logger
 
@@ -2484,7 +2154,6 @@ Logs are written to `data/nexus.log`:
 
 Log level is set based on CLI flags:
 
-<!-- page-break-inside: avoid -->
 ```python
 # In main.py:
 if args.debug:
@@ -2497,9 +2166,6 @@ else:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: DATABASE LAYER -->
 ## 28. DATABASE LAYER
 
 ### Overview
@@ -2518,7 +2184,6 @@ The Database layer (`core/database.py`) provides a SQLite wrapper for persistent
 
 #### Conversations
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE conversations (
     id TEXT PRIMARY KEY,
@@ -2532,7 +2197,6 @@ CREATE TABLE conversations (
 
 #### Tasks
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE tasks (
     id TEXT PRIMARY KEY,
@@ -2551,7 +2215,6 @@ CREATE TABLE tasks (
 
 #### Security Events
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE security_events (
     id TEXT PRIMARY KEY,
@@ -2565,7 +2228,6 @@ CREATE TABLE security_events (
 
 #### Workflow Chains
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE workflow_chains (
     id TEXT PRIMARY KEY,
@@ -2587,7 +2249,6 @@ CREATE TABLE workflow_steps (
 
 #### Analytics
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE analytics_events (
     id TEXT PRIMARY KEY,
@@ -2599,7 +2260,6 @@ CREATE TABLE analytics_events (
 
 #### Bus Tables (Communication Bus)
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE bus_messages (
     id TEXT PRIMARY KEY,
@@ -2637,7 +2297,6 @@ CREATE TABLE bus_event_log (
 
 #### Planner Tables
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE plans (
     id TEXT PRIMARY KEY,
@@ -2677,7 +2336,6 @@ CREATE TABLE plan_history (
 
 #### Marketplace Tables
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE marketplace_agents (
     id TEXT PRIMARY KEY,
@@ -2717,7 +2375,6 @@ CREATE TABLE verification_reports (
 
 ### Context Database Schema (context.db)
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE context_snapshots (
     id TEXT PRIMARY KEY,
@@ -2762,7 +2419,6 @@ CREATE TABLE context_rules (
 
 ### Learning Database Schema (learning.db)
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE behavior_records (
     id TEXT PRIMARY KEY,
@@ -2809,7 +2465,6 @@ CREATE TABLE prediction_log (
 
 The `Database` class provides a simple interface:
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.database import Database
 
@@ -2840,9 +2495,6 @@ Database migrations are handled manually. When schema changes are needed:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: EVENT BUS -->
 ## 29. EVENT BUS
 
 ### Overview
@@ -2869,7 +2521,6 @@ Publisher ──→ EventBus ──→ Subscriber 1
 
 ### Subscribing to Events
 
-<!-- page-break-inside: avoid -->
 ```python
 # Basic subscription
 bus.subscribe("file.created", on_file_created)
@@ -2894,7 +2545,6 @@ bus.subscribe("*.error", on_any_error)           # agent.error, task.error, etc.
 
 ### Publishing Events
 
-<!-- page-break-inside: avoid -->
 ```python
 # Synchronous publish (waits for all subscribers)
 bus.publish("file.created", data={"path": "/tmp/test.txt"})
@@ -2905,7 +2555,6 @@ await bus.publish_async("web.search_complete", data={"results": [...]})
 
 ### Event Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class BusMessage:
@@ -2929,7 +2578,6 @@ class BusMessage:
 
 ### Unsubscribing
 
-<!-- page-break-inside: avoid -->
 ```python
 # Unsubscribe by handler reference
 bus.unsubscribe("file.created", on_file_created)
@@ -2945,7 +2593,6 @@ bus.unsubscribe_subscriber(on_file_created)
 
 The event bus uses a `ThreadPoolExecutor` for dispatching events to subscribers:
 
-<!-- page-break-inside: avoid -->
 ```python
 with self._lock:
     subscribers = self._subscribers.get(event_type, [])
@@ -2958,9 +2605,6 @@ with ThreadPoolExecutor(max_workers=len(subscribers)) as executor:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: MESSAGE BROKER -->
 ## 30. MESSAGE BROKER
 
 ### Overview
@@ -2999,7 +2643,6 @@ PENDING → QUEUED → DELIVERED → ACKNOWLEDGED
 
 ### Sending Messages
 
-<!-- page-break-inside: avoid -->
 ```python
 broker.send(
     event_type="task.completed",
@@ -3011,7 +2654,6 @@ broker.send(
 
 ### Receiving Messages
 
-<!-- page-break-inside: avoid -->
 ```python
 # Blocking receive (waits for message)
 message = broker.receive(timeout=10)
@@ -3027,7 +2669,6 @@ broker.acknowledge(message.message_id)
 
 Messages that fail after max retries are moved to the DLQ:
 
-<!-- page-break-inside: avoid -->
 ```python
 dlq = broker.get_dead_letter_queue()
 for message in dlq:
@@ -3040,7 +2681,6 @@ DLQ capacity: 1000 messages (oldest are dropped when full).
 
 The broker runs a background thread that retries failed messages every 30 seconds:
 
-<!-- page-break-inside: avoid -->
 ```python
 def _retry_loop(self):
     while self._running:
@@ -3056,7 +2696,6 @@ def _retry_loop(self):
 
 Expired messages are cleaned up every 120 seconds:
 
-<!-- page-break-inside: avoid -->
 ```python
 def _cleanup_loop(self):
     while self._running:
@@ -3066,9 +2705,6 @@ def _cleanup_loop(self):
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SHARED STATE MANAGER -->
 ## 31. SHARED STATE MANAGER
 
 ### Overview
@@ -3086,7 +2722,6 @@ The Shared State Manager (`agents/communication_bus_agent/shared_state.py`) prov
 
 ### Basic Operations
 
-<!-- page-break-inside: avoid -->
 ```python
 # Set a value
 state_manager.set("user.preferences.theme", "dark")
@@ -3104,7 +2739,6 @@ if state_manager.exists("user.preferences.theme"):
 
 ### Namespaces
 
-<!-- page-break-inside: avoid -->
 ```python
 # Default namespace
 state_manager.set("key", "value")
@@ -3116,7 +2750,6 @@ state_manager.get("key", namespace="agent_config")
 
 ### TTL (Time-To-Live)
 
-<!-- page-break-inside: avoid -->
 ```python
 # Entry expires after 60 seconds
 state_manager.set("session.token", "abc123", ttl=60)
@@ -3128,7 +2761,6 @@ if state_manager.is_expired("session.token"):
 
 ### Optimistic Concurrency
 
-<!-- page-break-inside: avoid -->
 ```python
 # Get current version
 entry = state_manager.get_entry("counter")
@@ -3143,7 +2775,6 @@ if not success:
 
 ### Lock/Unlock
 
-<!-- page-break-inside: avoid -->
 ```python
 # Acquire lock
 state_manager.lock("critical_resource")
@@ -3157,7 +2788,6 @@ finally:
 
 ### Change Listeners
 
-<!-- page-break-inside: avoid -->
 ```python
 def on_theme_change(key, old_value, new_value):
     print(f"Theme changed from {old_value} to {new_value}")
@@ -3167,9 +2797,6 @@ state_manager.add_listener("user.preferences.theme", on_theme_change)
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: EVENT LOGGER -->
 ## 32. EVENT LOGGER
 
 ### Overview
@@ -3186,7 +2813,6 @@ The Event Logger (`agents/communication_bus_agent/event_logger.py`) provides per
 
 ### Logging Events
 
-<!-- page-break-inside: avoid -->
 ```python
 logger.log(
     event_type="agent.started",
@@ -3197,7 +2823,6 @@ logger.log(
 
 ### Streaming Events
 
-<!-- page-break-inside: avoid -->
 ```python
 def on_event(event):
     print(f"[{event.timestamp}] {event.event_type}: {event.data}")
@@ -3207,7 +2832,6 @@ logger.add_stream_listener(on_event)
 
 ### Querying Events
 
-<!-- page-break-inside: avoid -->
 ```python
 # Get all events
 events = logger.get_events()
@@ -3227,7 +2851,6 @@ count = logger.get_event_count()
 
 ### Analytics
 
-<!-- page-break-inside: avoid -->
 ```python
 # Communication flow analysis
 flow = logger.get_communication_flow()
@@ -3242,7 +2865,6 @@ timeline = logger.get_timeline()
 
 The in-memory buffer is a deque with max 5000 entries:
 
-<!-- page-break-inside: avoid -->
 ```python
 self._buffer = deque(maxlen=5000)
 ```
@@ -3251,9 +2873,6 @@ When the buffer is full, the oldest entries are automatically dropped. Persisten
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: INTER-AGENT COMMUNICATION -->
 ## 33. INTER-AGENT COMMUNICATION
 
 ### Overview
@@ -3267,7 +2886,6 @@ Agents communicate through the Communication Bus Agent using three mechanisms:
 
 #### Request-Response
 
-<!-- page-break-inside: avoid -->
 ```python
 # Agent A sends a request
 bus.publish("file.list_request", data={"path": "/tmp"}, priority=HIGH)
@@ -3282,7 +2900,6 @@ def handle_list_request(event):
 
 #### Event Broadcasting
 
-<!-- page-break-inside: avoid -->
 ```python
 # Any agent can broadcast an event
 bus.publish("task.completed", data={"task_id": "123"})
@@ -3295,7 +2912,6 @@ bus.subscribe("task.completed", trigger_learning)
 
 #### Shared Data
 
-<!-- page-break-inside: avoid -->
 ```python
 # Agent A writes to shared state
 state.set("workflow.current_step", "file_analysis")
@@ -3336,9 +2952,6 @@ A multi-agent workflow for "analyze my codebase and create a report":
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: WORKFLOW ENGINE -->
 ## 34. WORKFLOW ENGINE
 
 ### Overview
@@ -3354,7 +2967,6 @@ A workflow is a named sequence of steps, where each step is a command executed b
 
 ### Workflow Structure
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "id": "workflow-001",
@@ -3405,9 +3017,6 @@ A workflow is a named sequence of steps, where each step is a command executed b
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: WORKFLOW CHAINS -->
 ## 35. WORKFLOW CHAINS
 
 ### Overview
@@ -3458,9 +3067,6 @@ If a step fails:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PLANNING ENGINE -->
 ## 36. PLANNING ENGINE
 
 ### Overview
@@ -3486,7 +3092,6 @@ Create → Decompose → Execute → Monitor → Replan → Complete
 
 ### Plan Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class Plan:
@@ -3502,7 +3107,6 @@ class Plan:
 
 ### Task Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class PlanTask:
@@ -3531,9 +3135,6 @@ class PlanTask:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: GOAL DECOMPOSITION -->
 ## 37. GOAL DECOMPOSITION
 
 ### Overview
@@ -3570,7 +3171,6 @@ If no template matches, apply heuristic rules:
 
 If rule-based decomposition fails, use the LLM:
 
-<!-- page-break-inside: avoid -->
 ```python
 prompt = f"""
 Decompose this goal into executable tasks:
@@ -3584,7 +3184,6 @@ Return a list of tasks with agent assignments and dependencies.
 
 ### Decomposition Output
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "goal": "Prepare for my Python exam",
@@ -3616,9 +3215,6 @@ Return a list of tasks with agent assignments and dependencies.
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: DEPENDENCY GRAPH -->
 ## 38. DEPENDENCY GRAPH
 
 ### Overview
@@ -3634,7 +3230,6 @@ The Dependency Graph (`agents/planner_agent/dependency_graph.py`) is a Directed 
 
 ### Graph Construction
 
-<!-- page-break-inside: avoid -->
 ```python
 graph = DependencyGraph()
 
@@ -3663,7 +3258,6 @@ Level 2: [task-4]          ← Depends on task-2 and task-3
 
 ### Cycle Detection
 
-<!-- page-break-inside: avoid -->
 ```python
 if graph.has_cycle():
     raise CycleError("Task dependencies contain a cycle")
@@ -3671,7 +3265,6 @@ if graph.has_cycle():
 
 ### Ready Tasks
 
-<!-- page-break-inside: avoid -->
 ```python
 # Get tasks that can start now (all dependencies completed)
 ready_tasks = graph.get_ready_tasks(completed=["task-1"])
@@ -3680,7 +3273,6 @@ ready_tasks = graph.get_ready_tasks(completed=["task-1"])
 
 ### Blocked Tasks
 
-<!-- page-break-inside: avoid -->
 ```python
 # Get tasks that are blocked by incomplete dependencies
 blocked_tasks = graph.get_blocked_tasks(completed=[])
@@ -3689,9 +3281,6 @@ blocked_tasks = graph.get_blocked_tasks(completed=[])
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: TASK EXECUTOR -->
 ## 39. TASK EXECUTOR
 
 ### Overview
@@ -3707,7 +3296,6 @@ The Task Executor (`agents/planner_agent/task_executor.py`) handles parallel tas
 
 ### Execution Flow
 
-<!-- page-break-inside: avoid -->
 ```python
 executor = TaskExecutor(max_workers=3)
 
@@ -3725,7 +3313,6 @@ result = executor.execute_plan(plan)
 
 Tasks can reference results from previous tasks:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "tasks": [
@@ -3749,7 +3336,6 @@ Variables are substituted before task execution:
 
 ### Retry Logic
 
-<!-- page-break-inside: avoid -->
 ```python
 # Default: 3 retries with fallback commands
 task = PlanTask(
@@ -3767,9 +3353,6 @@ If the primary command fails:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ASYNC EXECUTION MODEL -->
 ## 40. ASYNC EXECUTION MODEL
 
 ### Overview
@@ -3789,7 +3372,6 @@ NEXUS uses asynchronous execution throughout the system to ensure the UI never b
 
 ### Async Agent Execution
 
-<!-- page-break-inside: avoid -->
 ```python
 async def handle_request(self, user_input: str) -> dict:
     # Router determines agent (sync)
@@ -3805,7 +3387,6 @@ async def handle_request(self, user_input: str) -> dict:
 
 Tasks run in the background without blocking the UI:
 
-<!-- page-break-inside: avoid -->
 ```python
 async def run_background_task(self):
     while True:
@@ -3817,7 +3398,6 @@ async def run_background_task(self):
 
 Maximum concurrent tasks are configurable:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "agents": {
@@ -3828,7 +3408,6 @@ Maximum concurrent tasks are configurable:
 
 The dispatcher respects this limit by using a semaphore:
 
-<!-- page-break-inside: avoid -->
 ```python
 self._semaphore = asyncio.Semaphore(max_concurrent_tasks)
 
@@ -3848,9 +3427,6 @@ Where threading is used (event bus, message broker, shared state), proper synchr
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CONTEXT AWARENESS -->
 ## 41. CONTEXT AWARENESS
 
 ### Overview
@@ -3963,9 +3539,6 @@ Context data is stored in `data/context.db` with 5 tables:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ACTIVITY CLASSIFICATION -->
 ## 42. ACTIVITY CLASSIFICATION
 
 ### Overview
@@ -3981,7 +3554,6 @@ The ActivityClassifier (`agents/context_awareness_agent/services.py`) maps runni
 
 ### Pattern Examples
 
-<!-- page-break-inside: avoid -->
 ```python
 CODING_PATTERNS = ["vscode", "pycharm", "vim", "terminal", "code", "sublime"]
 BROWSING_PATTERNS = ["chrome", "firefox", "safari", "edge", "brave"]
@@ -3992,7 +3564,6 @@ GAMING_PATTERNS = ["steam", "epic", "unity", "unreal", "game"]
 
 The classifier returns a confidence score (0.0–1.0):
 
-<!-- page-break-inside: avoid -->
 ```python
 result = classifier.classify(active_window="Visual Studio Code", running_apps=["code", "node"])
 # Returns: {"category": "coding", "confidence": 0.95}
@@ -4000,9 +3571,6 @@ result = classifier.classify(active_window="Visual Studio Code", running_apps=["
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: FOCUS DETECTION -->
 ## 43. FOCUS DETECTION
 
 ### Overview
@@ -4021,7 +3589,6 @@ Focus detection calculates the user's focus level based on multiple signals.
 
 ### Calculation
 
-<!-- page-break-inside: avoid -->
 ```python
 def calculate_focus_level(active_window_category, running_apps, system_load, time_of_day, session_duration):
     score = 0
@@ -4067,9 +3634,6 @@ def calculate_focus_level(active_window_category, running_apps, system_load, tim
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: WORKFLOW DETECTION -->
 ## 44. WORKFLOW DETECTION
 
 ### Overview
@@ -4085,7 +3649,6 @@ The WorkflowDetector (`agents/context_awareness_agent/services.py`) matches curr
 
 ### Pattern Matching
 
-<!-- page-break-inside: avoid -->
 ```python
 def detect_workflow(context_snapshot):
     best_match = None
@@ -4102,7 +3665,6 @@ def detect_workflow(context_snapshot):
 
 ### Workflow Pattern Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class ContextPattern:
@@ -4115,9 +3677,6 @@ class ContextPattern:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ADAPTIVE TRIGGERS -->
 ## 45. ADAPTIVE TRIGGERS
 
 ### Overview
@@ -4126,7 +3685,6 @@ The AdaptiveTriggerSystem (`agents/context_awareness_agent/services.py`) automat
 
 ### Trigger Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class AdaptiveTrigger:
@@ -4142,7 +3700,6 @@ class AdaptiveTrigger:
 
 Triggers are evaluated periodically (every 60 seconds by default):
 
-<!-- page-break-inside: avoid -->
 ```python
 def evaluate_triggers(self, context_snapshot):
     for trigger in self.triggers:
@@ -4167,9 +3724,6 @@ Cooldown: 60 minutes
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: LEARNING ENGINE -->
 ## 46. LEARNING ENGINE
 
 ### Overview
@@ -4219,9 +3773,6 @@ OBSERVING → LEARNING → CONFIRMED → ACTIVE
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: BEHAVIOR TRACKING -->
 ## 47. BEHAVIOR TRACKING
 
 ### Overview
@@ -4230,7 +3781,6 @@ The BehaviorTracker (`agents/learning_agent/services.py`) records every action w
 
 ### Record Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class BehaviorRecord:
@@ -4243,7 +3793,6 @@ class BehaviorRecord:
 
 ### Recording Actions
 
-<!-- page-break-inside: avoid -->
 ```python
 tracker.record(
     action="run tests",
@@ -4261,7 +3810,6 @@ tracker.record(
 
 The tracker maintains frequency counts:
 
-<!-- page-break-inside: avoid -->
 ```python
 # How often each action occurs
 frequency = tracker.get_action_frequency()
@@ -4278,9 +3826,6 @@ daily = tracker.get_daily_pattern("run tests")
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PATTERN ANALYSIS -->
 ## 48. PATTERN ANALYSIS
 
 ### Overview
@@ -4289,7 +3834,6 @@ The PatternAnalyzer (`agents/learning_agent/services.py`) detects patterns from 
 
 ### Frequency Patterns
 
-<!-- page-break-inside: avoid -->
 ```python
 patterns = analyzer.detect_frequency_patterns(records)
 # Returns: LearnedPattern(
@@ -4303,7 +3847,6 @@ patterns = analyzer.detect_frequency_patterns(records)
 
 ### Sequence Patterns
 
-<!-- page-break-inside: avoid -->
 ```python
 patterns = analyzer.detect_sequence_patterns(records)
 # Returns: LearnedPattern(
@@ -4316,7 +3859,6 @@ patterns = analyzer.detect_sequence_patterns(records)
 
 ### Time-Based Patterns
 
-<!-- page-break-inside: avoid -->
 ```python
 patterns = analyzer.detect_time_based_patterns(records)
 # Returns: LearnedPattern(
@@ -4330,7 +3872,6 @@ patterns = analyzer.detect_time_based_patterns(records)
 
 ### Contextual Patterns
 
-<!-- page-break-inside: avoid -->
 ```python
 patterns = analyzer.detect_contextual_patterns(records)
 # Returns: LearnedPattern(
@@ -4346,7 +3887,6 @@ patterns = analyzer.detect_contextual_patterns(records)
 
 Patterns are automatically promoted through the lifecycle:
 
-<!-- page-break-inside: avoid -->
 ```python
 def _promote_pattern(self, pattern):
     if pattern.occurrences >= 10 and pattern.status == "confirmed":
@@ -4359,9 +3899,6 @@ def _promote_pattern(self, pattern):
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: RECOMMENDATION ENGINE -->
 ## 49. RECOMMENDATION ENGINE
 
 ### Overview
@@ -4380,7 +3917,6 @@ The RecommendationEngine (`agents/learning_agent/services.py`) generates persona
 
 ### Recommendation Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class Recommendation:
@@ -4395,7 +3931,6 @@ class Recommendation:
 
 ### Generating Recommendations
 
-<!-- page-break-inside: avoid -->
 ```python
 recommendations = engine.generate_recommendations(patterns)
 # Returns: [
@@ -4422,9 +3957,6 @@ Accepted recommendations influence future recommendations. Dismissed ones are de
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PREDICTIVE ACTIONS -->
 ## 50. PREDICTIVE ACTIONS
 
 ### Overview
@@ -4433,7 +3965,6 @@ The AdaptiveWorkflowGenerator (`agents/learning_agent/services.py`) predicts the
 
 ### Next Action Prediction
 
-<!-- page-break-inside: avoid -->
 ```python
 prediction = engine.predict_next_action(current_context)
 # Returns: Prediction(
@@ -4454,7 +3985,6 @@ Predictions are scored on:
 
 ### Workflow Generation
 
-<!-- page-break-inside: avoid -->
 ```python
 workflows = engine.generate_workflows_from_patterns(patterns)
 # Returns: [
@@ -4472,7 +4002,6 @@ workflows = engine.generate_workflows_from_patterns(patterns)
 
 ### Daily Routine Generation
 
-<!-- page-break-inside: avoid -->
 ```python
 routine = engine.generate_daily_routine()
 # Returns a workflow based on the user's typical daily pattern
@@ -4480,7 +4009,6 @@ routine = engine.generate_daily_routine()
 
 ### Prediction Accuracy Tracking
 
-<!-- page-break-inside: avoid -->
 ```python
 # Log prediction accuracy
 engine.log_prediction(prediction, actual_action="run tests")
@@ -4512,9 +4040,6 @@ engine.log_prediction(prediction, actual_action="run tests")
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: MEMORY AGENT -->
 ## 51. MEMORY AGENT
 
 ### Overview
@@ -4548,7 +4073,6 @@ The Memory Agent uses vector embeddings for semantic search:
 
 ### Memory Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class Memory:
@@ -4562,9 +4086,6 @@ class Memory:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: KNOWLEDGE AGENT -->
 ## 52. KNOWLEDGE AGENT
 
 ### Overview
@@ -4591,7 +4112,6 @@ The Knowledge Agent (`agents/knowledge_agent/`) manages a knowledge base of docu
 
 ### Knowledge Structure
 
-<!-- page-break-inside: avoid -->
 ```python
 @dataclass
 class KnowledgeItem:
@@ -4606,9 +4126,6 @@ class KnowledgeItem:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SEMANTIC SEARCH -->
 ## 53. SEMANTIC SEARCH
 
 ### Overview
@@ -4624,7 +4141,6 @@ Semantic search finds results by meaning, not just keyword matching.
 
 ### Similarity Calculation
 
-<!-- page-break-inside: avoid -->
 ```python
 def cosine_similarity(a, b):
     dot_product = sum(x * y for x, y in zip(a, b))
@@ -4644,9 +4160,6 @@ Both Memory Agent and Knowledge Agent support semantic search:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: VECTOR STORAGE -->
 ## 54. VECTOR STORAGE
 
 ### Overview
@@ -4655,7 +4168,6 @@ Vector embeddings are stored in SQLite databases alongside the original text.
 
 ### Storage Strategy
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE memories (
     id TEXT PRIMARY KEY,
@@ -4668,7 +4180,6 @@ CREATE TABLE memories (
 ```
 
 Embeddings are stored as JSON arrays of floats:
-<!-- page-break-inside: avoid -->
 ```json
 [0.123, -0.456, 0.789, ...]
 ```
@@ -4682,9 +4193,6 @@ Embeddings are stored as JSON arrays of floats:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CONVERSATION HISTORY -->
 ## 55. CONVERSATION HISTORY
 
 ### Overview
@@ -4693,7 +4201,6 @@ All conversations are persisted in `data/nexus.db` for future reference.
 
 ### Storage
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE conversations (
     id TEXT PRIMARY KEY,
@@ -4725,9 +4232,6 @@ Conversations are grouped by session:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: FILE AGENT -->
 ## 56. FILE AGENT
 
 ### Overview
@@ -4764,9 +4268,6 @@ The File Agent (`agents/file_agent/`) manages file system operations including b
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: WEB AGENT -->
 ## 57. WEB AGENT
 
 ### Overview
@@ -4804,9 +4305,6 @@ The Web Agent uses Playwright for browser automation:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: CODING AGENT -->
 ## 58. CODING AGENT
 
 ### Overview
@@ -4846,9 +4344,6 @@ The Coding Agent supports multiple programming languages:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: AUTOMATION AGENT -->
 ## 59. AUTOMATION AGENT
 
 ### Overview
@@ -4888,9 +4383,6 @@ The Automation Agent uses pyautogui for GUI automation:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SCHEDULER AGENT -->
 ## 60. SCHEDULER AGENT
 
 ### Overview
@@ -4927,9 +4419,6 @@ The Scheduler Agent (`agents/scheduler_agent/`) manages scheduled tasks and remi
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: NOTIFICATION AGENT -->
 ## 61. NOTIFICATION AGENT
 
 ### Overview
@@ -4970,9 +4459,6 @@ The Notification Agent (`agents/notification_agent/`) manages system notificatio
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: TERMINAL AGENT -->
 ## 62. TERMINAL AGENT
 
 ### Overview
@@ -5013,9 +4499,6 @@ By default, these commands require explicit confirmation:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: VISION AGENT -->
 ## 63. VISION AGENT
 
 ### Overview
@@ -5053,9 +4536,6 @@ The Vision Agent uses multimodal LLMs for image analysis:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SECURITY AGENT -->
 ## 64. SECURITY AGENT
 
 ### Overview
@@ -5094,7 +4574,6 @@ The Security Agent (`agents/security_agent/`) monitors system security, detects 
 
 Security events are logged to `data/nexus.db`:
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE security_events (
     id TEXT PRIMARY KEY,
@@ -5108,9 +4587,6 @@ CREATE TABLE security_events (
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ANALYTICS AGENT -->
 ## 65. ANALYTICS AGENT
 
 ### Overview
@@ -5149,7 +4625,6 @@ The Analytics Agent (`agents/analytics_agent/`) collects and reports system metr
 
 Analytics events are logged to `data/nexus.db`:
 
-<!-- page-break-inside: avoid -->
 ```sql
 CREATE TABLE analytics_events (
     id TEXT PRIMARY KEY,
@@ -5161,9 +4636,6 @@ CREATE TABLE analytics_events (
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PERSONALITY AGENT -->
 ## 66. PERSONALITY AGENT
 
 ### Overview
@@ -5207,9 +4679,6 @@ The Personality Agent (`agents/personality_agent/`) manages AI personality, tone
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: COMMUNICATION BUS AGENT -->
 ## 67. COMMUNICATION BUS AGENT
 
 ### Overview
@@ -5239,9 +4708,6 @@ The Communication Bus Agent (`agents/communication_bus_agent/`) is the central c
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: MARKETPLACE AGENT -->
 ## 68. MARKETPLACE AGENT
 
 ### Overview
@@ -5337,9 +4803,6 @@ Download → Verify → Resolve Dependencies → Install → Activate
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PLUGIN AGENT -->
 ## 69. PLUGIN AGENT
 
 ### Overview
@@ -5371,7 +4834,6 @@ Plugins are discovered from the `plugins/` directory:
 
 ### Plugin Manifest
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "name": "Quick Notes",
@@ -5440,9 +4902,6 @@ Uses `psutil` for system monitoring.
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PLUGIN DEVELOPMENT -->
 ## 70. PLUGIN DEVELOPMENT
 
 ### Overview
@@ -5453,7 +4912,6 @@ This section covers how to develop custom plugins for NEXUS.
 
 The Plugin Agent provides abstract base classes in `agents/plugin_agent/plugin_api.py`:
 
-<!-- page-break-inside: avoid -->
 ```python
 class BasePlugin(ABC):
     """Base class for all plugins."""
@@ -5510,7 +4968,6 @@ class HookPlugin(BasePlugin):
 
 1. **Create Plugin Directory**
 
-<!-- page-break-inside: avoid -->
 ```bash
 mkdir plugins/my_plugin
 ```
@@ -5518,7 +4975,6 @@ mkdir plugins/my_plugin
 2. **Create Manifest**
 
 `plugins/my_plugin/plugin.json`:
-<!-- page-break-inside: avoid -->
 ```json
 {
   "name": "My Plugin",
@@ -5534,7 +4990,6 @@ mkdir plugins/my_plugin
 3. **Create Implementation**
 
 `plugins/my_plugin/plugin.py`:
-<!-- page-break-inside: avoid -->
 ```python
 from agents.plugin_agent.plugin_api import CommandPlugin
 
@@ -5567,7 +5022,6 @@ class MyPlugin(CommandPlugin):
 ### Creating a Single-File Plugin
 
 `plugins/my_single_file_plugin.py`:
-<!-- page-break-inside: avoid -->
 ```python
 from agents.plugin_agent.plugin_api import CommandPlugin
 from agents.plugin_agent.models import PluginMetadata
@@ -5607,7 +5061,6 @@ class MySingleFilePlugin(CommandPlugin):
 
 Specify dependencies in the manifest:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "dependencies": ["psutil>=5.0", "requests>=2.28"],
@@ -5621,7 +5074,6 @@ The Plugin Agent checks dependencies before loading.
 
 Declare plugin capabilities in the manifest:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "capabilities": [
@@ -5636,9 +5088,6 @@ Capabilities are enforced by the sandbox.
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PLUGIN SANDBOX -->
 ## 71. PLUGIN SANDBOX
 
 ### Overview
@@ -5673,7 +5122,6 @@ The Plugin Sandbox (`agents/plugin_agent/sandbox.py`) provides restricted execut
 
 The CodeAnalyzer (`agents/plugin_agent/sandbox.py`) performs static analysis:
 
-<!-- page-break-inside: avoid -->
 ```python
 analyzer = CodeAnalyzer()
 result = analyzer.analyze(source_code)
@@ -5691,7 +5139,6 @@ Detects:
 
 The RestrictedImporter prevents loading blocked modules:
 
-<!-- page-break-inside: avoid -->
 ```python
 importer = RestrictedImporter(allowed_modules=ALLOWED_MODULES)
 module = importer.load_module("my_plugin")
@@ -5701,7 +5148,6 @@ module = importer.load_module("my_plugin")
 
 Plugin execution is subject to timeout enforcement:
 
-<!-- page-break-inside: avoid -->
 ```python
 # Plugin execution timeout (default: 30 seconds)
 timeout = config.get("plugins.execution_timeout", default=30)
@@ -5713,9 +5159,6 @@ timeout = config.get("plugins.execution_timeout", default=30)
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: PERFORMANCE OPTIMIZATION -->
 ## 72. PERFORMANCE OPTIMIZATION
 
 ### Overview
@@ -5766,9 +5209,6 @@ For memory-constrained systems:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: DEPENDENCY MANAGEMENT -->
 ## 73. DEPENDENCY MANAGEMENT
 
 ### Overview
@@ -5805,7 +5245,6 @@ Some agents have additional dependencies:
 
 Plugins can specify dependencies in their manifest:
 
-<!-- page-break-inside: avoid -->
 ```json
 {
   "dependencies": ["psutil>=5.0", "requests>=2.28"]
@@ -5816,7 +5255,6 @@ Dependencies are checked during plugin loading.
 
 ### Installing Dependencies
 
-<!-- page-break-inside: avoid -->
 ```bash
 # Core dependencies
 pip install -r requirements.txt
@@ -5832,7 +5270,6 @@ playwright install
 
 The Marketplace Agent includes a `DependencyResolver` for agent installation:
 
-<!-- page-break-inside: avoid -->
 ```python
 resolver = DependencyResolver()
 install_order = resolver.resolve(agent_dependencies)
@@ -5847,9 +5284,6 @@ Features:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: DEBUGGING & TROUBLESHOOTING -->
 ## 74. DEBUGGING & TROUBLESHOOTING
 
 ### Overview
@@ -5860,7 +5294,6 @@ This section covers common issues and how to resolve them.
 
 Enable debug mode for detailed logging:
 
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --debug
 ```
@@ -5876,7 +5309,6 @@ Debug mode shows:
 
 Enable verbose mode for INFO-level logs:
 
-<!-- page-break-inside: avoid -->
 ```bash
 python main.py --verbose
 ```
@@ -5891,7 +5323,6 @@ Verbose mode shows:
 
 All logs are written to `data/nexus.log` regardless of console mode:
 
-<!-- page-break-inside: avoid -->
 ```bash
 # View log file
 cat data/nexus.log        # macOS/Linux
@@ -5972,9 +5403,6 @@ tail -f data/nexus.log    # macOS/Linux
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ERROR HANDLING -->
 ## 75. ERROR HANDLING
 
 ### Overview
@@ -5995,7 +5423,6 @@ NEXUS implements comprehensive error handling at every layer.
 
 ### Retry Strategy
 
-<!-- page-break-inside: avoid -->
 ```python
 async def execute_with_retry(func, max_retries=3, backoff=1.0):
     for attempt in range(max_retries):
@@ -6026,9 +5453,6 @@ Errors are:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: BACKGROUND TASKS -->
 ## 76. BACKGROUND TASKS
 
 ### Overview
@@ -6048,7 +5472,6 @@ NEXUS runs several background tasks continuously:
 
 Background tasks run in separate threads or async coroutines:
 
-<!-- page-break-inside: avoid -->
 ```python
 # Async background task
 async def background_task():
@@ -6075,9 +5498,6 @@ threading.Thread(target=background_thread, daemon=True).start()
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: SESSION MANAGEMENT -->
 ## 77. SESSION MANAGEMENT
 
 ### Overview
@@ -6128,9 +5548,6 @@ Each session includes:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ADVANCED CONFIGURATION -->
 ## 78. ADVANCED CONFIGURATION
 
 ### Environment Variables
@@ -6159,7 +5576,6 @@ Configuration can be overridden at multiple levels:
 
 Some settings can be changed at runtime:
 
-<!-- page-break-inside: avoid -->
 ```python
 from core.config import config
 
@@ -6177,7 +5593,6 @@ config.reload()
 
 The config validates required keys on load:
 
-<!-- page-break-inside: avoid -->
 ```python
 required_keys = ["llm.provider", "llm.model"]
 for key in required_keys:
@@ -6187,9 +5602,6 @@ for key in required_keys:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: BEST PRACTICES -->
 ## 79. BEST PRACTICES
 
 ### General
@@ -6226,9 +5638,6 @@ for key in required_keys:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ARCHITECTURE DECISIONS -->
 ## 80. ARCHITECTURE DECISIONS
 
 ### Why Textual?
@@ -6275,9 +5684,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: ROADMAP & FUTURE -->
 ## 81. ROADMAP & FUTURE
 
 ### Planned Features
@@ -6305,9 +5711,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX A: COMPLETE COMMAND REFERENCE -->
 ## APPENDIX A: COMPLETE COMMAND REFERENCE
 
 ### System Commands
@@ -6573,9 +5976,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX B: DATABASE SCHEMA REFERENCE -->
 ## APPENDIX B: DATABASE SCHEMA REFERENCE
 
 ### nexus.db Tables
@@ -6623,9 +6023,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX C: API REFERENCE -->
 ## APPENDIX C: API REFERENCE
 
 ### Core API
@@ -6702,9 +6099,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX D: AGENT CATALOG -->
 ## APPENDIX D: AGENT CATALOG
 
 ### Built-In Agents (21)
@@ -6750,9 +6144,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX E: GLOSSARY -->
 ## APPENDIX E: GLOSSARY
 
 | Term | Definition |
@@ -6796,9 +6187,6 @@ Event bus was chosen over direct agent communication because:
 
 ---
 
-<div style="page-break-before: always;"></div>
-
-<!-- running-header: APPENDIX F: INDEX -->
 ## APPENDIX F: INDEX
 
 ### A
@@ -6904,7 +6292,5 @@ Event bus was chosen over direct agent communication because:
 - Workflow Engine — §34
 
 ---
-
-<div style="page-break-before: always;"></div>
 
 *End of NEXUS User Manual*
