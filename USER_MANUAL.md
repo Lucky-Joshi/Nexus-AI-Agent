@@ -4229,3 +4229,930 @@ Conversations are grouped by session:
 ---
 
 *Continue to Part VI: Productivity Tools →*
+
+---
+
+## 56. FILE AGENT
+
+### Overview
+
+The File Agent (`agents/file_agent/`) manages file system operations including browsing, searching, reading, writing, and organizing files.
+
+### Capabilities
+
+- **Directory Listing** — List files and directories
+- **File Search** — Search for files by name, extension, or content
+- **File Operations** — Read, write, copy, move, delete files
+- **File Analysis** — Get file size, type, modification date
+- **Directory Tree** — Visualize directory structure
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `list files` | List files in current directory |
+| `search files <pattern>` | Search for files matching pattern |
+| `read file <path>` | Read file contents |
+| `write file <path>` | Write content to file |
+| `copy file <src> <dest>` | Copy a file |
+| `move file <src> <dest>` | Move a file |
+| `delete file <path>` | Delete a file |
+| `file info <path>` | Get file metadata |
+| `directory tree` | Show directory tree |
+
+### Safety Features
+
+- **Confirmation** — Destructive operations (delete, overwrite) require confirmation
+- **Path Validation** — Paths are validated to prevent directory traversal
+- **Size Limits** — Large files are truncated to prevent memory issues
+
+---
+
+## 57. WEB AGENT
+
+### Overview
+
+The Web Agent (`agents/web_agent/`) handles web browsing, searching, and content extraction.
+
+### Capabilities
+
+- **Web Search** — Search the web using search engines
+- **Content Extraction** — Extract text from web pages
+- **URL Analysis** — Analyze URLs for safety and content type
+- **Screenshot Capture** — Capture webpage screenshots (via Playwright)
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `search web <query>` | Search the web |
+| `open url <url>` | Open and extract URL content |
+| `summarize url <url>` | Summarize webpage content |
+| `screenshot url <url>` | Capture webpage screenshot |
+
+### Playwright Integration
+
+The Web Agent uses Playwright for browser automation:
+- Headless browser for content extraction
+- JavaScript rendering for dynamic pages
+- Screenshot capture for visual content
+
+### Safety Features
+
+- **URL Validation** — URLs are validated before access
+- **Timeout** — Requests timeout after 30 seconds
+- **Content Filtering** — Malicious content is detected and blocked
+
+---
+
+## 58. CODING AGENT
+
+### Overview
+
+The Coding Agent (`agents/coding_agent/`) assists with code analysis, generation, review, and debugging.
+
+### Capabilities
+
+- **Code Analysis** — Analyze code quality, complexity, and style
+- **Code Generation** — Generate code from descriptions
+- **Code Review** — Review code for issues and improvements
+- **Debugging** — Help debug errors and exceptions
+- **Refactoring** — Suggest and perform refactoring
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `analyze code` | Analyze code quality |
+| `generate code <description>` | Generate code from description |
+| `review code` | Review code for issues |
+| `debug error <error>` | Help debug an error |
+| `refactor code` | Suggest refactoring |
+| `explain code` | Explain how code works |
+
+### Language Support
+
+The Coding Agent supports multiple programming languages:
+- Python, JavaScript, TypeScript, Java, C++, C#, Go, Rust, Ruby, PHP, and more
+
+### Analysis Metrics
+
+- **Complexity** — Cyclomatic complexity of functions
+- **Style** — PEP 8, ESLint, or language-specific style checks
+- **Security** — Common vulnerability patterns
+- **Performance** — Potential performance issues
+
+---
+
+## 59. AUTOMATION AGENT
+
+### Overview
+
+The Automation Agent (`agents/automation_agent/`) creates and manages automated tasks and scripts.
+
+### Capabilities
+
+- **Task Automation** — Automate repetitive tasks
+- **Script Generation** — Generate automation scripts
+- **Schedule Automation** — Schedule automated tasks
+- **GUI Automation** — Automate GUI interactions (via pyautogui)
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `create automation` | Create a new automation |
+| `list automations` | List all automations |
+| `run automation <name>` | Execute an automation |
+| `delete automation <name>` | Remove an automation |
+| `schedule automation` | Schedule an automation |
+
+### GUI Automation
+
+The Automation Agent uses pyautogui for GUI automation:
+- Mouse movement and clicking
+- Keyboard input
+- Screen region detection
+- Image-based element recognition
+
+### Safety Features
+
+- **Dry Run** — Automations can be tested in dry-run mode
+- **Confirmation** — Destructive automations require confirmation
+- **Timeout** — Automations timeout after a configurable duration
+
+---
+
+## 60. SCHEDULER AGENT
+
+### Overview
+
+The Scheduler Agent (`agents/scheduler_agent/`) manages scheduled tasks and reminders.
+
+### Capabilities
+
+- **Task Scheduling** — Schedule tasks for specific times
+- **Reminders** — Set reminders for events
+- **Recurring Tasks** — Create recurring scheduled tasks
+- **Calendar Integration** — Manage calendar events
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `schedule task` | Schedule a new task |
+| `list tasks` | List scheduled tasks |
+| `cancel task <id>` | Cancel a scheduled task |
+| `set reminder` | Set a reminder |
+| `list reminders` | List all reminders |
+| `recurring task` | Create a recurring task |
+
+### Schedule Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `one_time` | Runs once at specified time | "Remind me at 3 PM" |
+| `daily` | Runs every day at specified time | "Daily standup at 9 AM" |
+| `weekly` | Runs every week on specified day | "Weekly review on Friday" |
+| `monthly` | Runs every month on specified date | "Monthly report on 1st" |
+| `interval` | Runs at regular intervals | "Check email every 30 minutes" |
+
+---
+
+## 61. NOTIFICATION AGENT
+
+### Overview
+
+The Notification Agent (`agents/notification_agent/`) manages system notifications and alerts.
+
+### Capabilities
+
+- **System Notifications** — Display system notifications
+- **Alert Management** — Manage alert priorities and delivery
+- **Notification History** — Track sent notifications
+- **Custom Notifications** — Create custom notification templates
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `send notification` | Send a notification |
+| `list notifications` | List recent notifications |
+| `clear notifications` | Clear all notifications |
+| `notification settings` | Configure notification preferences |
+
+### Notification Types
+
+| Type | Description | Priority |
+|------|-------------|----------|
+| `info` | Informational message | Low |
+| `warning` | Warning message | Medium |
+| `error` | Error alert | High |
+| `success` | Success confirmation | Low |
+| `reminder` | Reminder notification | Medium |
+
+### Delivery Methods
+
+- **Terminal** — Display in terminal UI
+- **System** — OS-level notification (if available)
+- **Sound** — Audio alert (if configured)
+
+---
+
+## 62. TERMINAL AGENT
+
+### Overview
+
+The Terminal Agent (`agents/terminal_agent/`) executes shell commands and manages terminal sessions.
+
+### Capabilities
+
+- **Command Execution** — Run shell commands
+- **Output Capture** — Capture command output
+- **Session Management** — Manage terminal sessions
+- **Environment Variables** — Get and set environment variables
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `run command <cmd>` | Execute a shell command |
+| `terminal session` | Start a terminal session |
+| `env list` | List environment variables |
+| `env get <var>` | Get an environment variable |
+| `env set <var> <val>` | Set an environment variable |
+
+### Safety Features
+
+- **Command Validation** — Dangerous commands are blocked or require confirmation
+- **Timeout** — Commands timeout after 30 seconds
+- **Output Limits** — Output is truncated if too large
+- **Sandbox Mode** — Commands can be run in restricted mode
+
+### Blocked Commands
+
+By default, these commands require explicit confirmation:
+- `rm -rf /` and similar destructive commands
+- `format` and disk operations
+- `sudo` commands with elevated privileges
+- Network configuration changes
+
+---
+
+## 63. VISION AGENT
+
+### Overview
+
+The Vision Agent (`agents/vision_agent/`) handles image analysis, OCR, and visual content understanding.
+
+### Capabilities
+
+- **Image Analysis** — Analyze images and describe content
+- **OCR** — Extract text from images
+- **Screenshot Analysis** — Analyze screenshots
+- **Image Generation** — Generate images from descriptions (if supported)
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `analyze image <path>` | Analyze an image |
+| `ocr image <path>` | Extract text from image |
+| `describe screenshot` | Analyze current screenshot |
+| `generate image <description>` | Generate an image |
+
+### Vision Model Support
+
+The Vision Agent uses multimodal LLMs for image analysis:
+- GPT-4 Vision (OpenAI)
+- LLaVA (Ollama)
+- Other vision-capable models
+
+### Image Processing
+
+- Supported formats: PNG, JPEG, GIF, BMP, WebP
+- Maximum size: 10 MB per image
+- Automatic resizing for large images
+
+---
+
+## 64. SECURITY AGENT
+
+### Overview
+
+The Security Agent (`agents/security_agent/`) monitors system security, detects threats, and manages security policies.
+
+### Capabilities
+
+- **Threat Detection** — Detect security threats
+- **Vulnerability Scanning** — Scan for known vulnerabilities
+- **Security Policies** — Manage security policies
+- **Audit Logging** — Log security events
+- **File Integrity** — Monitor file integrity
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `security scan` | Run a security scan |
+| `threat list` | List detected threats |
+| `security policies` | Show security policies |
+| `audit log` | Show security audit log |
+| `file integrity` | Check file integrity |
+
+### Threat Categories
+
+| Category | Description | Severity |
+|----------|-------------|----------|
+| `malware` | Malicious software detected | Critical |
+| `vulnerability` | Known vulnerability found | High |
+| `misconfiguration` | Security misconfiguration | Medium |
+| `unauthorized_access` | Unauthorized access attempt | High |
+| `data_exposure` | Sensitive data exposed | Medium |
+
+### Security Events
+
+Security events are logged to `data/nexus.db`:
+
+```sql
+CREATE TABLE security_events (
+    id TEXT PRIMARY KEY,
+    event_type TEXT NOT NULL,
+    severity TEXT,
+    description TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    resolved BOOLEAN DEFAULT FALSE
+);
+```
+
+---
+
+## 65. ANALYTICS AGENT
+
+### Overview
+
+The Analytics Agent (`agents/analytics_agent/`) collects and reports system metrics and usage analytics.
+
+### Capabilities
+
+- **System Metrics** — CPU, memory, disk, network usage
+- **Usage Analytics** — Track agent usage, command frequency
+- **Performance Reports** — Generate performance reports
+- **Trend Analysis** — Identify trends over time
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `system status` | Show system status |
+| `usage report` | Show usage analytics |
+| `performance report` | Show performance metrics |
+| `trend analysis` | Show trends over time |
+| `analytics stats` | Show analytics statistics |
+
+### Metrics Tracked
+
+| Metric | Description |
+|--------|-------------|
+| `agent_calls` | Number of times each agent was called |
+| `command_frequency` | Most frequently used commands |
+| `response_times` | Average response time per agent |
+| `error_rates` | Error rate per agent |
+| `system_load` | CPU, memory, disk usage over time |
+| `session_duration` | Average session duration |
+
+### Analytics Events
+
+Analytics events are logged to `data/nexus.db`:
+
+```sql
+CREATE TABLE analytics_events (
+    id TEXT PRIMARY KEY,
+    event_type TEXT NOT NULL,
+    data TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 66. PERSONALITY AGENT
+
+### Overview
+
+The Personality Agent (`agents/personality_agent/`) manages AI personality, tone, and communication style.
+
+### Capabilities
+
+- **Personality Profiles** — Pre-defined personality profiles
+- **Custom Personality** — Create custom personality settings
+- **Tone Adjustment** — Adjust communication tone
+- **Style Learning** — Learn from user communication style
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `set personality` | Set AI personality |
+| `list personalities` | List available personalities |
+| `adjust tone` | Adjust communication tone |
+| `personality info` | Show current personality |
+
+### Personality Profiles
+
+| Profile | Description |
+|---------|-------------|
+| `professional` | Formal, concise, business-appropriate |
+| `friendly` | Warm, conversational, approachable |
+| `technical` | Detailed, precise, jargon-friendly |
+| `casual` | Relaxed, informal, conversational |
+| `academic` | Scholarly, well-referenced, thorough |
+
+### Tone Settings
+
+| Tone | Description |
+|------|-------------|
+| `formal` | Professional and respectful |
+| `neutral` | Balanced and objective |
+| `casual` | Relaxed and friendly |
+| `humorous` | Light-hearted and witty |
+
+---
+
+## 67. COMMUNICATION BUS AGENT
+
+### Overview
+
+The Communication Bus Agent (`agents/communication_bus_agent/`) is the central communication hub for inter-agent messaging. See Sections 29–33 for detailed documentation.
+
+### Quick Reference
+
+| Component | Purpose |
+|-----------|---------|
+| `EventBus` | Thread-safe pub/sub messaging |
+| `MessageBroker` | Priority-queued message delivery |
+| `SharedStateManager` | Thread-safe key-value store |
+| `EventLogger` | Persistent event logging |
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `bus status` | Show bus status |
+| `bus messages` | List recent messages |
+| `bus subscriptions` | List active subscriptions |
+| `bus shared state` | Show shared state entries |
+| `bus events` | Show event log |
+| `bus publish` | Publish a message |
+| `bus subscribe` | Subscribe to an event |
+
+---
+
+## 68. MARKETPLACE AGENT
+
+### Overview
+
+The Marketplace Agent (`agents/marketplace_agent/`) enables browsing, installing, updating, and verifying community agents.
+
+### Capabilities
+
+- **Browse Agents** — Browse available community agents
+- **Install Agents** — Install agents with dependency resolution
+- **Update Agents** — Update installed agents
+- **Verify Agents** — Security verification before installation
+- **Review Agents** — Rate and review agents
+
+### Marketplace API
+
+The marketplace includes 10 seeded agents:
+
+| Agent | Category | Description |
+|-------|----------|-------------|
+| `weather_agent` | PRODUCTIVITY | Weather forecasts and alerts |
+| `email_agent` | COMMUNICATION | Email management and automation |
+| `music_agent` | ENTERTAINMENT | Music control and recommendations |
+| `git_agent` | DEVELOPMENT | Git operations and workflow |
+| `calendar_agent` | PRODUCTIVITY | Calendar management and scheduling |
+| `docker_agent` | DEVELOPMENT | Docker container management |
+| `network_agent` | SYSTEM | Network diagnostics and monitoring |
+| `translation_agent` | COMMUNICATION | Language translation |
+| `database_agent` | ANALYTICS | Database query and management |
+| `home_automation_agent` | AUTOMATION | Smart home device control |
+
+### Agent Categories
+
+| Category | Description |
+|----------|-------------|
+| `PRODUCTIVITY` | Productivity and organization tools |
+| `DEVELOPMENT` | Development and coding tools |
+| `AUTOMATION` | Automation and scripting tools |
+| `COMMUNICATION` | Communication and messaging tools |
+| `ANALYTICS` | Data analysis and reporting tools |
+| `SECURITY` | Security and privacy tools |
+| `ENTERTAINMENT` | Entertainment and media tools |
+| `SYSTEM` | System administration tools |
+| `AI_ML` | AI and machine learning tools |
+| `UTILITIES` | General utility tools |
+
+### Verification Process
+
+The AgentVerifier performs 6 checks:
+
+1. **Checksum** — Verify file integrity
+2. **Signature** — Verify digital signature
+3. **Security Scan** — AST analysis + regex pattern matching
+4. **Dependency Check** — Verify all dependencies are available
+5. **Compatibility Check** — Verify Python version and platform compatibility
+6. **Sandbox Test** — Test execution in sandboxed environment
+
+### Dangerous Import Detection
+
+The security scanner detects 16 dangerous imports:
+- `os`, `sys`, `subprocess`, `ctypes`, `socket`, `http`, `urllib`, `requests`, `ftplib`, `smtplib`, `shutil`, `pickle`, `marshal`, `importlib`, `compile`, `exec`
+
+### Suspicious Pattern Detection
+
+The scanner detects 17 suspicious patterns:
+- `eval()`, `exec()`, `compile()`, `__import__()`, `getattr()`, `setattr()`, `delattr()`, `globals()`, `locals()`, `vars()`, `dir()`, `open()`, `input()`, `breakpoint()`, `memoryview()`, `super()`, `object`
+
+### Installation Process
+
+```
+Download → Verify → Resolve Dependencies → Install → Activate
+```
+
+1. **Download** — Fetch agent package from marketplace
+2. **Verify** — Run 6-check verification
+3. **Resolve Dependencies** — Resolve and install dependencies
+4. **Install** — Install to `installed_agents/<agent_name>/`
+5. **Activate** — Register with AIManager
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `browse marketplace` | Browse available agents |
+| `search marketplace <query>` | Search marketplace |
+| `install agent <name>` | Install an agent |
+| `update agent <name>` | Update an installed agent |
+| `uninstall agent <name>` | Remove an installed agent |
+| `list installed` | List installed agents |
+| `verify agent <name>` | Verify an agent's security |
+| `agent info <name>` | Show agent details |
+| `review agent` | Rate and review an agent |
+
+---
+
+## 69. PLUGIN AGENT
+
+### Overview
+
+The Plugin Agent (`agents/plugin_agent/`) manages plugin lifecycle: discovery, loading, enabling, disabling, and execution.
+
+### Plugin Architecture
+
+Plugins are lightweight extensions that add commands or services to NEXUS without requiring a full agent.
+
+### Plugin Types
+
+| Type | Description |
+|------|-------------|
+| `COMMAND` | Adds new commands to NEXUS |
+| `SERVICE` | Provides a background service |
+| `HOOK` | Hooks into system events |
+| `AGENT` | Extends agent capabilities |
+| `UI` | Adds UI components |
+| `MIDDLEWARE` | Intercepts and modifies requests |
+| `EXTENSION` | General-purpose extension |
+
+### Plugin Discovery
+
+Plugins are discovered from the `plugins/` directory:
+
+1. **Directory Plugins** — Directories containing `plugin.json` manifest
+2. **Single-File Plugins** — `.py` files in the `plugins/` directory
+
+### Plugin Manifest
+
+```json
+{
+  "name": "Quick Notes",
+  "version": "1.0.0",
+  "description": "Save and search quick notes",
+  "type": "COMMAND",
+  "author": "User",
+  "commands": ["note save", "notes list", "notes search"],
+  "security_level": "SANDBOXED"
+}
+```
+
+### Plugin Lifecycle
+
+```
+Discover → Load → Enable → Execute → Disable → Unload → Uninstall
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `install plugin` | Install a plugin |
+| `uninstall plugin` | Remove a plugin |
+| `enable plugin` | Enable a disabled plugin |
+| `disable plugin` | Disable an enabled plugin |
+| `reload plugin` | Reload a plugin |
+| `list plugins` | List all plugins |
+| `plugin info <name>` | Show plugin details |
+| `plugin commands` | List plugin commands |
+| `plugin events` | List plugin events |
+| `plugin stats` | Show plugin statistics |
+| `discover plugins` | Discover new plugins |
+| `plugin security` | Show plugin security info |
+| `run plugin <name>` | Execute a plugin |
+
+### Sample Plugins
+
+#### Quick Notes (Directory Plugin)
+
+Location: `plugins/quick_notes/`
+
+```
+quick_notes/
+├── plugin.json      # Manifest
+└── plugin.py        # Implementation
+```
+
+Commands:
+- `note save <text>` — Save a note
+- `notes list` — List all notes
+- `notes search <query>` — Search notes
+
+Storage: `plugins/quick_notes/notes.json`
+
+#### System Info (Single-File Plugin)
+
+Location: `plugins/system_info_plugin.py`
+
+Commands:
+- `sysinfo` — Show system information
+- `meminfo` — Show memory information
+- `diskinfo` — Show disk information
+
+Uses `psutil` for system monitoring.
+
+---
+
+## 70. PLUGIN DEVELOPMENT
+
+### Overview
+
+This section covers how to develop custom plugins for NEXUS.
+
+### Plugin Base Classes
+
+The Plugin Agent provides abstract base classes in `agents/plugin_agent/plugin_api.py`:
+
+```python
+class BasePlugin(ABC):
+    """Base class for all plugins."""
+    
+    def __init__(self, metadata: PluginMetadata):
+        self.metadata = metadata
+    
+    @abstractmethod
+    def initialize(self) -> None:
+        """Initialize the plugin."""
+        pass
+    
+    @abstractmethod
+    def execute(self, command: str, **kwargs) -> dict:
+        """Execute a plugin command."""
+        pass
+    
+    @abstractmethod
+    def shutdown(self) -> None:
+        """Shutdown the plugin."""
+        pass
+
+class CommandPlugin(BasePlugin):
+    """Plugin that adds commands."""
+    
+    def get_commands(self) -> list[str]:
+        """Return list of supported commands."""
+        pass
+
+class ServicePlugin(BasePlugin):
+    """Plugin that provides a background service."""
+    
+    def start_service(self) -> None:
+        """Start the background service."""
+        pass
+    
+    def stop_service(self) -> None:
+        """Stop the background service."""
+        pass
+
+class HookPlugin(BasePlugin):
+    """Plugin that hooks into system events."""
+    
+    def get_hooks(self) -> list[str]:
+        """Return list of events to hook into."""
+        pass
+    
+    def on_event(self, event: str, data: dict) -> None:
+        """Handle a system event."""
+        pass
+```
+
+### Creating a Command Plugin
+
+1. **Create Plugin Directory**
+
+```bash
+mkdir plugins/my_plugin
+```
+
+2. **Create Manifest**
+
+`plugins/my_plugin/plugin.json`:
+```json
+{
+  "name": "My Plugin",
+  "version": "1.0.0",
+  "description": "Description of my plugin",
+  "type": "COMMAND",
+  "author": "Your Name",
+  "commands": ["my command", "my other command"],
+  "security_level": "SANDBOXED"
+}
+```
+
+3. **Create Implementation**
+
+`plugins/my_plugin/plugin.py`:
+```python
+from agents.plugin_agent.plugin_api import CommandPlugin
+
+class MyPlugin(CommandPlugin):
+    def initialize(self):
+        pass
+    
+    def get_commands(self):
+        return ["my command", "my other command"]
+    
+    def execute(self, command, **kwargs):
+        if command == "my command":
+            return {"success": True, "data": "Result"}
+        elif command == "my other command":
+            return {"success": True, "data": "Other result"}
+        return {"success": False, "error": "Unknown command"}
+    
+    def shutdown(self):
+        pass
+```
+
+4. **Discover and Install**
+
+```
+> discover plugins
+> install plugin my_plugin
+> list plugins
+```
+
+### Creating a Single-File Plugin
+
+`plugins/my_single_file_plugin.py`:
+```python
+from agents.plugin_agent.plugin_api import CommandPlugin
+from agents.plugin_agent.models import PluginMetadata
+
+metadata = PluginMetadata(
+    name="My Single File Plugin",
+    version="1.0.0",
+    description="A simple single-file plugin",
+    type="COMMAND",
+    author="Your Name",
+    commands=["hello", "goodbye"],
+    security_level="SANDBOXED"
+)
+
+class MySingleFilePlugin(CommandPlugin):
+    def __init__(self):
+        super().__init__(metadata)
+    
+    def initialize(self):
+        pass
+    
+    def get_commands(self):
+        return self.metadata.commands
+    
+    def execute(self, command, **kwargs):
+        if command == "hello":
+            return {"success": True, "data": "Hello!"}
+        elif command == "goodbye":
+            return {"success": True, "data": "Goodbye!"}
+        return {"success": False, "error": "Unknown command"}
+    
+    def shutdown(self):
+        pass
+```
+
+### Plugin Dependencies
+
+Specify dependencies in the manifest:
+
+```json
+{
+  "dependencies": ["psutil>=5.0", "requests>=2.28"],
+  "python_version": ">=3.10"
+}
+```
+
+The Plugin Agent checks dependencies before loading.
+
+### Plugin Capabilities
+
+Declare plugin capabilities in the manifest:
+
+```json
+{
+  "capabilities": [
+    {"type": "file_access", "paths": ["/tmp", "./notes"]},
+    {"type": "network_access", "domains": ["api.example.com"]},
+    {"type": "command_execution", "commands": ["ls", "cat"]}
+  ]
+}
+```
+
+Capabilities are enforced by the sandbox.
+
+---
+
+## 71. PLUGIN SANDBOX
+
+### Overview
+
+The Plugin Sandbox (`agents/plugin_agent/sandbox.py`) provides restricted execution for untrusted plugins.
+
+### Security Levels
+
+| Level | Description |
+|-------|-------------|
+| `TRUSTED` | Full access to system |
+| `SANDBOXED` | Restricted modules and operations |
+| `RESTRICTED` | Very limited access |
+| `BLOCKED` | Cannot be loaded |
+
+### Allowed Modules (Sandboxed)
+
+28 modules are allowed in sandboxed mode:
+- `json`, `csv`, `datetime`, `time`, `math`, `random`, `re`, `string`, `collections`, `itertools`, `functools`, `operator`, `copy`, `typing`, `dataclasses`, `enum`, `abc`, `pathlib`, `os.path`, `stat`, `textwrap`, `unicodedata`, `html`, `xml`, `logging`, `hashlib`, `base64`, `uuid`
+
+### Blocked Modules
+
+23 modules are blocked:
+- `os`, `sys`, `subprocess`, `ctypes`, `socket`, `http`, `urllib`, `requests`, `ftplib`, `smtplib`, `shutil`, `pickle`, `marshal`, `importlib`, `compile`, `exec`, `eval`, `__import__`, `threading`, `multiprocessing`, `asyncio`, `concurrent`, `signal`
+
+### Safe Builtins
+
+40 safe built-in functions are available:
+- `abs`, `all`, `any`, `bin`, `bool`, `bytes`, `chr`, `dict`, `divmod`, `enumerate`, `filter`, `float`, `format`, `frozenset`, `hex`, `int`, `isinstance`, `issubclass`, `iter`, `len`, `list`, `map`, `max`, `min`, `next`, `oct`, `ord`, `pow`, `print`, `range`, `repr`, `reversed`, `round`, `set`, `slice`, `sorted`, `str`, `sum`, `tuple`, `zip`
+
+### Code Analyzer
+
+The CodeAnalyzer (`agents/plugin_agent/sandbox.py`) performs static analysis:
+
+```python
+analyzer = CodeAnalyzer()
+result = analyzer.analyze(source_code)
+
+if result.has_dangerous_functions:
+    raise SecurityError("Plugin contains dangerous functions")
+```
+
+Detects:
+- `eval()`, `exec()`, `compile()`, `__import__()`
+- Dangerous attributes: `__subclasses__`, `__mro__`, `__globals__`
+- Dangerous calls: `open()`, `input()`, `breakpoint()`
+
+### Restricted Importer
+
+The RestrictedImporter prevents loading blocked modules:
+
+```python
+importer = RestrictedImporter(allowed_modules=ALLOWED_MODULES)
+module = importer.load_module("my_plugin")
+```
+
+### Timeout Enforcement
+
+Plugin execution is subject to timeout enforcement:
+
+```python
+# Plugin execution timeout (default: 30 seconds)
+timeout = config.get("plugins.execution_timeout", default=30)
+```
+
+---
+
+*Continue to Part VI: Productivity Tools →*
