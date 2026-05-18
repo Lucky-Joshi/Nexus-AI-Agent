@@ -5155,4 +5155,1142 @@ timeout = config.get("plugins.execution_timeout", default=30)
 
 ---
 
-*Continue to Part VI: Productivity Tools →*
+*Continue to Part VII: System Management →*
+
+---
+
+## 72. PERFORMANCE OPTIMIZATION
+
+### Overview
+
+NEXUS is designed for performance, but several factors can affect responsiveness.
+
+### Performance Factors
+
+| Factor | Impact | Mitigation |
+|--------|--------|------------|
+| LLM Provider | High (1–5s per response) | Use local Ollama, enable streaming |
+| Agent Count | Medium (startup time) | Disable unused agents |
+| Database Size | Low (SQLite is fast) | Regular cleanup of old data |
+| UI Complexity | Low (Textual is efficient) | Reduce animation speed |
+| Concurrent Tasks | Medium (CPU/memory) | Limit max concurrent tasks |
+
+### Optimization Tips
+
+1. **Use Local LLM** — Ollama is faster than cloud APIs for most tasks
+2. **Disable Unused Agents** — Remove agents you don't need from the registry
+3. **Limit Concurrent Tasks** — Set `max_concurrent_tasks` to match your CPU cores
+4. **Reduce Animation Speed** — Set `animation_speed` to `"fast"` in config
+5. **Disable Loader** — Set `show_loader` to `false` for faster startup
+6. **Use CLI Mode** — `--cli` mode skips Textual UI initialization
+7. **Regular Cleanup** — Clean up old conversations, tasks, and context data
+
+### Monitoring Performance
+
+```
+> system status          # Show system metrics
+> performance report     # Show performance analytics
+> analytics stats        # Show analytics statistics
+```
+
+### Memory Management
+
+NEXUS uses minimal memory by default:
+- **SQLite** — Efficient disk-based storage
+- **Streaming** — Responses are streamed, not buffered
+- **Lazy Loading** — Agents are loaded on demand
+- **Connection Pooling** — Database connections are reused
+
+For memory-constrained systems:
+- Limit concurrent tasks to 1–2
+- Disable context monitoring
+- Disable learning agent
+- Use CLI mode instead of Textual UI
+
+---
+
+## 73. DEPENDENCY MANAGEMENT
+
+### Overview
+
+NEXUS dependencies are managed through `requirements.txt` and per-agent/plugin requirements.
+
+### Core Dependencies
+
+All core dependencies are in `requirements.txt`:
+
+```
+textual>=8.2.0
+rich>=13.0.0
+openai>=1.0.0
+pydantic>=2.0.0
+psutil>=5.9.0
+watchdog>=3.0.0
+playwright>=1.40.0
+schedule>=1.2.0
+colorama>=0.4.6
+pygetwindow>=0.0.9; sys_platform == 'win32'
+pyautogui>=0.9.54
+```
+
+### Agent-Specific Dependencies
+
+Some agents have additional dependencies:
+- **Web Agent** — `playwright` (browser automation)
+- **Context Awareness** — `pygetwindow` (Windows only), `pyautogui`
+- **Automation Agent** — `pyautogui`
+- **Vision Agent** — Multimodal LLM support
+
+### Plugin Dependencies
+
+Plugins can specify dependencies in their manifest:
+
+```json
+{
+  "dependencies": ["psutil>=5.0", "requests>=2.28"]
+}
+```
+
+Dependencies are checked during plugin loading.
+
+### Installing Dependencies
+
+```bash
+# Core dependencies
+pip install -r requirements.txt
+
+# Playwright browsers (for Web Agent)
+playwright install
+
+# Ollama (for local LLM)
+# Visit https://ollama.ai for installation
+```
+
+### Dependency Resolution
+
+The Marketplace Agent includes a `DependencyResolver` for agent installation:
+
+```python
+resolver = DependencyResolver()
+install_order = resolver.resolve(agent_dependencies)
+# Returns: topological sort of dependencies
+```
+
+Features:
+- Recursive dependency resolution
+- Version compatibility checking
+- Conflict detection
+- Topological sort for install order
+
+---
+
+## 74. DEBUGGING & TROUBLESHOOTING
+
+### Overview
+
+This section covers common issues and how to resolve them.
+
+### Debug Mode
+
+Enable debug mode for detailed logging:
+
+```bash
+python main.py --debug
+```
+
+Debug mode shows:
+- DEBUG-level logs
+- All stdout/stderr
+- Detailed error traces
+- Agent loading details
+- Database queries
+
+### Verbose Mode
+
+Enable verbose mode for INFO-level logs:
+
+```bash
+python main.py --verbose
+```
+
+Verbose mode shows:
+- INFO-level logs
+- All stdout/stderr
+- Agent initialization messages
+- Task execution details
+
+### Log File
+
+All logs are written to `data/nexus.log` regardless of console mode:
+
+```bash
+# View log file
+cat data/nexus.log        # macOS/Linux
+type data/nexus.log       # Windows
+
+# Follow log in real-time
+tail -f data/nexus.log    # macOS/Linux
+```
+
+### Common Issues
+
+#### Ollama Connection Error
+
+**Symptom**: `Connection refused` or `Ollama not running`
+
+**Solution**:
+1. Ensure Ollama is installed: `ollama --version`
+2. Start Ollama: `ollama serve`
+3. Pull a model: `ollama pull llama3`
+4. Verify URL: `curl http://localhost:11434/api/tags`
+
+#### OpenAI API Error
+
+**Symptom**: `Invalid API key` or `Rate limit exceeded`
+
+**Solution**:
+1. Verify API key in `.env`: `OPENAI_API_KEY=sk-...`
+2. Check API key validity at https://platform.openai.com
+3. Wait for rate limit to reset (usually 1 minute)
+
+#### Textual UI Error
+
+**Symptom**: `Terminal too small` or `Unicode error`
+
+**Solution**:
+1. Increase terminal window size
+2. Ensure terminal supports Unicode
+3. Try CLI mode: `python main.py --cli`
+
+#### Database Error
+
+**Symptom**: `Database locked` or `Table not found`
+
+**Solution**:
+1. Close any other processes using the database
+2. Delete the database file and restart (data will be lost)
+3. Run database migration if schema changed
+
+#### Plugin Loading Error
+
+**Symptom**: `Plugin failed to load` or `Module not found`
+
+**Solution**:
+1. Check plugin syntax: `python -m py_compile plugins/my_plugin/plugin.py`
+2. Verify manifest: `cat plugins/my_plugin/plugin.json`
+3. Check dependencies: `pip install <missing-package>`
+4. Check security level: ensure plugin doesn't use blocked modules
+
+#### Agent Not Found
+
+**Symptom**: `Agent not found: <name>`
+
+**Solution**:
+1. Verify agent directory exists: `ls agents/<name>/`
+2. Check agent.py has correct class name
+3. Check agent extends BaseAgent
+4. Check for import errors in agent.py
+
+### Diagnostic Commands
+
+```
+> system status          # Show system health
+> list plugins           # Show plugin status
+> list agents            # Show agent status
+> bus status             # Show communication bus status
+> analytics stats        # Show analytics
+```
+
+---
+
+## 75. ERROR HANDLING
+
+### Overview
+
+NEXUS implements comprehensive error handling at every layer.
+
+### Error Types
+
+| Error Type | Source | Handling |
+|------------|--------|----------|
+| `ConnectionError` | LLM provider, network | Retry with backoff |
+| `TimeoutError` | Agent execution, LLM call | Retry or fallback |
+| `ValueError` | Invalid input, config | Log error, return fallback |
+| `KeyError` | Missing config, data | Use default value |
+| `FileNotFoundError` | File operations | Return error message |
+| `SecurityError` | Plugin sandbox, security agent | Block operation, log event |
+| `CycleError` | Dependency graph | Report error, abort plan |
+
+### Retry Strategy
+
+```python
+async def execute_with_retry(func, max_retries=3, backoff=1.0):
+    for attempt in range(max_retries):
+        try:
+            return await func()
+        except Exception as e:
+            if attempt == max_retries - 1:
+                raise
+            await asyncio.sleep(backoff * (2 ** attempt))
+```
+
+### Fallback Strategy
+
+If an agent fails, the system tries fallback options:
+
+1. **Retry** — Same command, up to 3 times
+2. **Fallback Command** — Alternative command for the same agent
+3. **Alternative Agent** — Different agent with similar capabilities
+4. **Default Response** — Generic error message
+
+### Error Reporting
+
+Errors are:
+- Logged to `data/nexus.log`
+- Recorded in the task database
+- Reported to the user (in user-friendly terms)
+- Tracked in analytics for trend analysis
+
+---
+
+## 76. BACKGROUND TASKS
+
+### Overview
+
+NEXUS runs several background tasks continuously:
+
+| Task | Frequency | Purpose |
+|------|-----------|---------|
+| Context Monitoring | Every 10 seconds | Track user activity and focus |
+| Learning Analysis | Every 5 minutes | Analyze behavior patterns |
+| Task Retry Loop | Every 30 seconds | Retry failed tasks |
+| Message Cleanup | Every 2 minutes | Remove expired messages |
+| Scheduled Tasks | Every minute | Check and run scheduled tasks |
+| Analytics Collection | Every minute | Collect system metrics |
+
+### Background Task Management
+
+Background tasks run in separate threads or async coroutines:
+
+```python
+# Async background task
+async def background_task():
+    while True:
+        await do_something()
+        await asyncio.sleep(interval)
+
+# Thread-based background task
+def background_thread():
+    while running:
+        do_something()
+        time.sleep(interval)
+
+threading.Thread(target=background_thread, daemon=True).start()
+```
+
+### Monitoring Background Tasks
+
+```
+> system status          # Show background task status
+> tasks                  # Show all tasks (including background)
+> analytics stats        # Show background task metrics
+```
+
+---
+
+## 77. SESSION MANAGEMENT
+
+### Overview
+
+NEXUS manages user sessions for conversation tracking and context preservation.
+
+### Session Lifecycle
+
+```
+Start → Active → (Conversations) → End → Archive
+```
+
+### Session Start
+
+A session starts when NEXUS launches:
+- Unique session ID is generated (UUID)
+- Session record is created in the database
+- Context monitoring begins (if enabled)
+- Learning tracking begins (if enabled)
+
+### Session End
+
+A session ends when NEXUS exits:
+- Session end time is recorded
+- Context monitoring stops
+- Learning data is saved
+- Session is archived
+
+### Session Data
+
+Each session includes:
+- Session ID (UUID)
+- Start time
+- End time
+- Conversation count
+- Task count
+- Agent usage statistics
+- Context snapshots (if enabled)
+
+### Session Commands
+
+```
+> session start          # Start a new session (manual)
+> session end            # End current session (manual)
+> session info           # Show current session info
+> session history        # Show session history
+```
+
+---
+
+## 78. ADVANCED CONFIGURATION
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NEXUS_LOG_LEVEL` | `WARNING` | Override log level |
+| `NEXUS_DATA_DIR` | `./data` | Custom data directory |
+| `NEXUS_CONFIG_DIR` | `./config` | Custom config directory |
+| `NEXUS_PLUGIN_DIR` | `./plugins` | Custom plugin directory |
+| `NEXUS_AGENT_DIR` | `./agents` | Custom agent directory |
+| `NEXUS_MAX_TASKS` | `5` | Max concurrent tasks |
+| `NEXUS_TASK_TIMEOUT` | `300` | Task timeout in seconds |
+| `NEXUS_SHOW_LOADER` | `true` | Show startup loader |
+| `NEXUS_THEME` | `nexus-dark` | Default theme |
+
+### Configuration Overrides
+
+Configuration can be overridden at multiple levels:
+
+1. **Environment Variables** — Highest priority
+2. **Settings File** — Medium priority
+3. **Defaults** — Lowest priority
+
+### Runtime Configuration
+
+Some settings can be changed at runtime:
+
+```python
+from core.config import config
+
+# Change LLM provider
+config.set("llm.provider", "openai")
+
+# Change theme
+config.set("ui.theme", "nexus-light")
+
+# Reload configuration
+config.reload()
+```
+
+### Configuration Validation
+
+The config validates required keys on load:
+
+```python
+required_keys = ["llm.provider", "llm.model"]
+for key in required_keys:
+    if not config.get(key):
+        raise ConfigurationError(f"Missing required config: {key}")
+```
+
+---
+
+## 79. BEST PRACTICES
+
+### General
+
+1. **Use Virtual Environments** — Isolate NEXUS dependencies
+2. **Keep Ollama Updated** — Latest models have better performance
+3. **Regular Backups** — Back up `data/` directory regularly
+4. **Monitor Logs** — Check `data/nexus.log` for issues
+5. **Clean Up Old Data** — Periodically clean old conversations and tasks
+
+### Security
+
+1. **Never Commit `.env`** — Keep API keys out of version control
+2. **Review Plugins** — Always review plugin code before installing
+3. **Use Sandboxed Mode** — Run untrusted plugins in sandboxed mode
+4. **Enable Security Agent** — Keep security monitoring enabled
+5. **Verify Marketplace Agents** — Always verify before installing
+
+### Performance
+
+1. **Use Local LLM** — Ollama is faster for most tasks
+2. **Limit Concurrent Tasks** — Match to your CPU cores
+3. **Disable Unused Agents** — Reduce startup time and memory
+4. **Use CLI Mode for Scripts** — Skip Textual UI overhead
+5. **Regular Database Cleanup** — Remove old records
+
+### Development
+
+1. **Follow Agent Structure** — Use the standard agent package layout
+2. **Extend BaseAgent** — Always extend the base class
+3. **Use Async** — Prefer async operations for I/O
+4. **Handle Errors** — Implement comprehensive error handling
+5. **Write Tests** — Test agents independently
+
+---
+
+## 80. ARCHITECTURE DECISIONS
+
+### Why Textual?
+
+Textual was chosen over PyQt6 for the primary UI because:
+- **Terminal-native** — Works over SSH, in containers, on any platform
+- **Lightweight** — Minimal dependencies, fast startup
+- **Keyboard-first** — Optimized for power users
+- **Rich ecosystem** — Built on Rich, excellent documentation
+
+PyQt6 is available as an alternative interface in `ui/`.
+
+### Why SQLite?
+
+SQLite was chosen over PostgreSQL/MySQL because:
+- **Zero configuration** — No database server needed
+- **Single file** — Easy to back up and move
+- **Fast** — Excellent performance for single-user workloads
+- **Built-in** — Part of Python standard library
+
+### Why Multi-Agent?
+
+Multi-agent architecture was chosen over a single monolithic agent because:
+- **Specialization** — Each agent excels at its domain
+- **Parallelism** — Agents can run concurrently
+- **Maintainability** — Agents can be developed and tested independently
+- **Extensibility** — New agents can be added without modifying existing ones
+
+### Why 3-Stage Routing?
+
+3-stage routing (Regex → Fuzzy → LLM) was chosen because:
+- **Speed** — Regex is instant, fuzzy is fast, LLM is slow
+- **Accuracy** — Regex is precise, fuzzy handles typos, LLM handles ambiguity
+- **Cost** — Regex and fuzzy are free, LLM costs tokens
+- **Reliability** — If LLM fails, regex and fuzzy still work
+
+### Why Event Bus?
+
+Event bus was chosen over direct agent communication because:
+- **Decoupling** — Agents don't need to know about each other
+- **Scalability** — New agents can subscribe to existing events
+- **Flexibility** — Multiple agents can respond to the same event
+- **Observability** — All communication is logged and trackable
+
+---
+
+## 81. ROADMAP & FUTURE
+
+### Planned Features
+
+| Feature | Status | Description |
+|---------|--------|-------------|
+| MCP Server | Planned | Model Context Protocol server for external tool integration |
+| Tmux Layouts | Planned | Tmux-style terminal layouts with embedded shell |
+| Typing Animations | Planned | Smooth typing animations for responses |
+| Markdown Rendering | Planned | Full markdown rendering in chat |
+| Voice Input | Planned | Speech-to-text for voice commands |
+| Mobile Companion | Planned | Mobile app for remote NEXUS control |
+| Cloud Sync | Planned | Sync conversations and settings across devices |
+| Agent Marketplace | Planned | Real marketplace for community agents |
+| Workflow Editor | Planned | Visual workflow editor |
+| Dashboard Widgets | Planned | Customizable dashboard widgets |
+
+### Long-Term Vision
+
+- **Full Autonomy** — NEXUS can accomplish complex goals with minimal user input
+- **Cross-Platform** — Run on desktop, server, mobile, and cloud
+- **Multi-Modal** — Support text, voice, image, and video input
+- **Collaborative** — Multiple users can share a NEXUS instance
+- **Self-Improving** — NEXUS learns and improves its own workflows
+
+---
+
+## APPENDIX A: COMPLETE COMMAND REFERENCE
+
+### System Commands
+
+| Command | Agent | Description |
+|---------|-------|-------------|
+| `help` | System | Show available commands |
+| `exit` | System | Exit NEXUS |
+| `system status` | Analytics | Show system status |
+| `session start` | System | Start a new session |
+| `session end` | System | End current session |
+
+### File Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `list files` | List files in current directory |
+| `search files <pattern>` | Search for files |
+| `read file <path>` | Read file contents |
+| `write file <path>` | Write to file |
+| `copy file <src> <dest>` | Copy a file |
+| `move file <src> <dest>` | Move a file |
+| `delete file <path>` | Delete a file |
+| `file info <path>` | Get file metadata |
+| `directory tree` | Show directory tree |
+
+### Web Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `search web <query>` | Search the web |
+| `open url <url>` | Open and extract URL content |
+| `summarize url <url>` | Summarize webpage content |
+| `screenshot url <url>` | Capture webpage screenshot |
+
+### Coding Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `analyze code` | Analyze code quality |
+| `generate code <description>` | Generate code |
+| `review code` | Review code |
+| `debug error <error>` | Debug an error |
+| `refactor code` | Suggest refactoring |
+| `explain code` | Explain code |
+
+### Automation Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `create automation` | Create automation |
+| `list automations` | List automations |
+| `run automation <name>` | Execute automation |
+| `delete automation <name>` | Remove automation |
+
+### Scheduler Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `schedule task` | Schedule a task |
+| `list tasks` | List scheduled tasks |
+| `cancel task <id>` | Cancel a task |
+| `set reminder` | Set a reminder |
+| `list reminders` | List reminders |
+| `recurring task` | Create recurring task |
+
+### Notification Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `send notification` | Send notification |
+| `list notifications` | List notifications |
+| `clear notifications` | Clear notifications |
+| `notification settings` | Configure settings |
+
+### Terminal Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `run command <cmd>` | Execute shell command |
+| `terminal session` | Start terminal session |
+| `env list` | List environment variables |
+| `env get <var>` | Get environment variable |
+| `env set <var> <val>` | Set environment variable |
+
+### Vision Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `analyze image <path>` | Analyze image |
+| `ocr image <path>` | Extract text from image |
+| `describe screenshot` | Analyze screenshot |
+| `generate image <description>` | Generate image |
+
+### Memory Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `save memory` | Save to memory |
+| `search memory` | Search memory |
+| `list memories` | List memories |
+| `delete memory` | Delete memory |
+| `recall` | Recall memories |
+| `memory stats` | Memory statistics |
+
+### Knowledge Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `add knowledge` | Add knowledge |
+| `search knowledge` | Search knowledge |
+| `list knowledge` | List knowledge |
+| `summarize` | Summarize item |
+| `delete knowledge` | Delete knowledge |
+| `knowledge stats` | Knowledge statistics |
+
+### Personality Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `set personality` | Set personality |
+| `list personalities` | List personalities |
+| `adjust tone` | Adjust tone |
+| `personality info` | Show current personality |
+
+### Workflow Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `create workflow` | Create workflow |
+| `list workflows` | List workflows |
+| `run workflow <name>` | Execute workflow |
+| `edit workflow <name>` | Edit workflow |
+| `delete workflow <name>` | Delete workflow |
+| `workflow status` | Show workflow status |
+
+### Security Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `security scan` | Run security scan |
+| `threat list` | List threats |
+| `security policies` | Show policies |
+| `audit log` | Show audit log |
+| `file integrity` | Check file integrity |
+
+### Analytics Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `system status` | Show system status |
+| `usage report` | Show usage analytics |
+| `performance report` | Show performance |
+| `trend analysis` | Show trends |
+| `analytics stats` | Show statistics |
+
+### Context Awareness Commands
+
+| Command | Description |
+|---------|-------------|
+| `current context` | Show context snapshot |
+| `active window` | Show active window |
+| `running apps` | List running apps |
+| `activity type` | Show activity type |
+| `focus level` | Show focus level |
+| `system load` | Show system load |
+| `suggest workflow` | Suggest workflow |
+| `suggest actions` | Suggest actions |
+| `start monitoring` | Start monitoring |
+| `stop monitoring` | Stop monitoring |
+| `workflow patterns` | List workflow patterns |
+| `detect workflow` | Detect current workflow |
+| `triggers` | List triggers |
+| `add trigger` | Add trigger |
+| `toggle trigger` | Toggle trigger |
+| `context history` | Show context history |
+| `activity summary` | Show activity summary |
+| `session start` | Start session |
+| `session end` | End session |
+| `context rules` | List context rules |
+| `add rule` | Add context rule |
+| `delete rule` | Delete context rule |
+| `cleanup` | Clean up context data |
+
+### Learning Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `start learning` | Enable learning |
+| `stop learning` | Disable learning |
+| `analyze` | Analyze behavior |
+| `patterns` | Show patterns |
+| `habits` | Show habits |
+| `recommendations` | Show recommendations |
+| `accept recommendation <n>` | Accept recommendation |
+| `dismiss recommendation <n>` | Dismiss recommendation |
+| `predict` | Predict next action |
+| `behavior history` | Show behavior history |
+| `learning stats` | Show learning stats |
+| `generate workflow` | Generate workflow |
+| `daily routine` | Generate daily routine |
+| `most common` | Show most common actions |
+| `hourly pattern` | Show hourly pattern |
+| `daily pattern` | Show daily pattern |
+| `prediction accuracy` | Show prediction accuracy |
+| `cleanup` | Clean up learning data |
+
+### Communication Bus Commands
+
+| Command | Description |
+|---------|-------------|
+| `bus status` | Show bus status |
+| `bus messages` | List messages |
+| `bus subscriptions` | List subscriptions |
+| `bus shared state` | Show shared state |
+| `bus events` | Show event log |
+| `bus publish` | Publish message |
+| `bus subscribe` | Subscribe to event |
+
+### Planner Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `create plan <goal>` | Create plan |
+| `list plans` | List plans |
+| `run plan <name>` | Execute plan |
+| `pause plan <name>` | Pause plan |
+| `resume plan <name>` | Resume plan |
+| `cancel plan <name>` | Cancel plan |
+| `plan status <name>` | Show plan status |
+
+### Marketplace Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `browse marketplace` | Browse agents |
+| `search marketplace <query>` | Search agents |
+| `install agent <name>` | Install agent |
+| `update agent <name>` | Update agent |
+| `uninstall agent <name>` | Uninstall agent |
+| `list installed` | List installed agents |
+| `verify agent <name>` | Verify agent |
+| `agent info <name>` | Show agent info |
+| `review agent` | Rate and review |
+
+### Plugin Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `install plugin` | Install plugin |
+| `uninstall plugin` | Uninstall plugin |
+| `enable plugin` | Enable plugin |
+| `disable plugin` | Disable plugin |
+| `reload plugin` | Reload plugin |
+| `list plugins` | List plugins |
+| `plugin info <name>` | Show plugin info |
+| `plugin commands` | List plugin commands |
+| `plugin events` | List plugin events |
+| `plugin stats` | Show plugin stats |
+| `discover plugins` | Discover plugins |
+| `plugin security` | Show security info |
+| `run plugin <name>` | Execute plugin |
+
+---
+
+## APPENDIX B: DATABASE SCHEMA REFERENCE
+
+### nexus.db Tables
+
+| Table | Columns | Purpose |
+|-------|---------|---------|
+| `conversations` | id, user_message, agent_response, timestamp, agent_name, session_id | Conversation history |
+| `tasks` | id, description, status, agent_name, priority, created_at, started_at, completed_at, result, error, retry_count | Task tracking |
+| `security_events` | id, event_type, severity, description, timestamp, resolved | Security event log |
+| `workflow_chains` | id, name, status, created_at, updated_at | Workflow chain definitions |
+| `workflow_steps` | id, chain_id, agent_name, command, order_index, status | Workflow chain steps |
+| `analytics_events` | id, event_type, data, timestamp | Analytics event log |
+| `bus_messages` | id, event_type, data, priority, status, created_at | Bus message storage |
+| `bus_subscriptions` | id, event_pattern, subscriber, created_at | Bus subscription records |
+| `bus_shared_state` | id, key, value, version, namespace, expires_at, updated_at | Shared state entries |
+| `bus_event_log` | id, event_type, data, timestamp | Bus event log |
+| `plans` | id, name, goal, status, progress, created_at, updated_at | Plan definitions |
+| `plan_tasks` | id, plan_id, description, status, dependencies, agent_name, order_index | Plan tasks |
+| `goal_templates` | id, name, description, template_data | Goal templates |
+| `plan_history` | id, plan_id, event_type, data, timestamp | Plan event history |
+| `marketplace_agents` | id, name, description, version, category, author, status, created_at | Marketplace agent catalog |
+| `install_records` | id, agent_id, status, installed_at, install_path | Installation records |
+| `agent_reviews` | id, agent_id, rating, review, created_at | Agent reviews |
+| `verification_reports` | id, agent_id, status, report_data, created_at | Verification reports |
+
+### context.db Tables
+
+| Table | Columns | Purpose |
+|-------|---------|---------|
+| `context_snapshots` | id, active_window, running_apps, activity_type, focus_level, system_load, timestamp | Context history |
+| `context_patterns` | id, name, description, pattern_data | Workflow patterns |
+| `adaptive_triggers` | id, name, condition, action, enabled | Adaptive triggers |
+| `context_sessions` | id, start_time, end_time, productivity_score | Session records |
+| `context_rules` | id, name, condition, action, enabled | User-defined rules |
+
+### learning.db Tables
+
+| Table | Columns | Purpose |
+|-------|---------|---------|
+| `behavior_records` | id, action, preceding_actions, context, timestamp | Behavior records |
+| `learned_patterns` | id, pattern_type, pattern_data, confidence, status | Learned patterns |
+| `recommendations` | id, type, description, status, created_at | Recommendations |
+| `user_habits` | id, habit_type, description, frequency, automation_potential | User habits |
+| `prediction_log` | id, prediction, actual, accurate, timestamp | Prediction accuracy |
+
+---
+
+## APPENDIX C: API REFERENCE
+
+### Core API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `core/base_agent.py` | `BaseAgent` | `execute()`, `get_commands()`, `start()`, `stop()`, `get_status()` |
+| `core/config.py` | `Config` | `get()`, `set()`, `reload()` |
+| `core/database.py` | `Database` | `execute()`, `fetch()`, `fetch_one()` |
+| `core/llm_provider.py` | `LLMProvider` | `generate()`, `generate_stream()`, `chat()`, `chat_stream()`, `embed()` |
+| `core/logger.py` | `Logger` | `set_mode()`, `suppress_console()`, `enable_console()` |
+
+### Manager API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `manager/manager.py` | `AIManager` | `initialize()`, `handle_request()`, `get_agent()`, `get_agents()`, `get_commands()`, `shutdown()` |
+| `manager/router.py` | `Router` | `route()` |
+| `manager/dispatcher.py` | `Dispatcher` | `dispatch()`, `worker()` |
+
+### Terminal API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `terminal/app.py` | `NexusApp` | `on_mount()` |
+| `terminal/loader.py` | `CinematicLoader` | `run()` |
+| `terminal/loader.py` | `PhaseTracker` | `advance()` |
+| `terminal/loader.py` | `StepTracker` | `advance()` |
+| `terminal/streaming.py` | `StreamingHandler` | `stream_response()` |
+| `terminal/theme.py` | `Theme` | Theme definitions |
+| `terminal/widgets.py` | `NexusHeader` | `render()` |
+| `terminal/widgets.py` | `NexusStatusBar` | `render()` |
+
+### Communication API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `communication_bus_agent/event_bus.py` | `EventBus` | `subscribe()`, `subscribe_async()`, `subscribe_once()`, `subscribe_conditional()`, `publish()`, `publish_async()`, `unsubscribe()`, `unsubscribe_all()`, `unsubscribe_subscriber()` |
+| `communication_bus_agent/message_broker.py` | `MessageBroker` | `send()`, `receive()`, `receive_nowait()`, `acknowledge()`, `get_dead_letter_queue()` |
+| `communication_bus_agent/shared_state.py` | `SharedStateManager` | `set()`, `get()`, `delete()`, `exists()`, `lock()`, `unlock()`, `add_listener()`, `is_expired()`, `get_entry()` |
+| `communication_bus_agent/event_logger.py` | `EventLogger` | `log()`, `add_stream_listener()`, `get_events()`, `get_event_count()`, `get_communication_flow()`, `get_timeline()` |
+
+### Planning API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `planner_agent/goal_decomposition.py` | `GoalDecomposer` | `decompose()` |
+| `planner_agent/dependency_graph.py` | `DependencyGraph` | `add_task()`, `add_dependency()`, `has_cycle()`, `get_ready_tasks()`, `get_blocked_tasks()` |
+| `planner_agent/planning_engine.py` | `PlanningEngine` | `create_plan()`, `execute_plan()`, `replan()` |
+| `planner_agent/task_executor.py` | `TaskExecutor` | `execute_plan()` |
+
+### Learning API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `learning_agent/services.py` | `LearningEngine` | `analyze()`, `predict()` |
+| `learning_agent/services.py` | `BehaviorTracker` | `record()`, `get_action_frequency()`, `get_hourly_pattern()`, `get_daily_pattern()` |
+| `learning_agent/services.py` | `PatternAnalyzer` | `detect_frequency_patterns()`, `detect_sequence_patterns()`, `detect_time_based_patterns()`, `detect_contextual_patterns()` |
+| `learning_agent/services.py` | `RecommendationEngine` | `generate_recommendations()` |
+| `learning_agent/services.py` | `AdaptiveWorkflowGenerator` | `generate_workflows_from_patterns()`, `generate_daily_routine()`, `predict_next_action()` |
+
+### Plugin API
+
+| Module | Class | Methods |
+|--------|-------|---------|
+| `plugin_agent/plugin_api.py` | `BasePlugin` | `initialize()`, `execute()`, `shutdown()` |
+| `plugin_agent/plugin_api.py` | `CommandPlugin` | `get_commands()` |
+| `plugin_agent/plugin_api.py` | `ServicePlugin` | `start_service()`, `stop_service()` |
+| `plugin_agent/plugin_api.py` | `HookPlugin` | `get_hooks()`, `on_event()` |
+| `plugin_agent/sandbox.py` | `PluginSandbox` | `execute()` |
+| `plugin_agent/sandbox.py` | `CodeAnalyzer` | `analyze()` |
+| `plugin_agent/loader.py` | `PluginLoader` | `discover()`, `load()` |
+| `plugin_agent/registry.py` | `PluginRegistry` | `register()`, `unregister()`, `get_plugin()`, `get_plugins()` |
+
+---
+
+## APPENDIX D: AGENT CATALOG
+
+### Built-In Agents (21)
+
+| # | Agent | Category | Commands | Description |
+|---|-------|----------|----------|-------------|
+| 1 | File Agent | System | 9 | File system operations |
+| 2 | Web Agent | Internet | 4 | Web browsing and content extraction |
+| 3 | Coding Agent | Development | 6 | Code analysis and generation |
+| 4 | Automation Agent | Automation | 4 | Task automation and scripting |
+| 5 | Memory Agent | Intelligence | 6 | Long-term memory and semantic search |
+| 6 | Vision Agent | Multimodal | 4 | Image analysis and OCR |
+| 7 | Notification Agent | System | 4 | System notifications and alerts |
+| 8 | Scheduler Agent | Productivity | 6 | Task scheduling and reminders |
+| 9 | Knowledge Agent | Intelligence | 6 | Knowledge base management |
+| 10 | Terminal Agent | System | 5 | Shell command execution |
+| 11 | Personality Agent | AI | 4 | AI personality and tone |
+| 12 | Workflow Agent | Automation | 6 | Workflow management |
+| 13 | Security Agent | Security | 5 | Security monitoring and scanning |
+| 14 | Workflow Chain Agent | Automation | 5 | Multi-agent execution chains |
+| 15 | Analytics Agent | Analytics | 5 | System metrics and analytics |
+| 16 | Context Awareness Agent | Intelligence | 24+ | Context monitoring and adaptive automation |
+| 17 | Learning Agent | Intelligence | 18 | Behavior tracking and pattern detection |
+| 18 | Communication Bus Agent | Infrastructure | 7 | Inter-agent communication |
+| 19 | Planner Agent | Intelligence | 7 | Goal decomposition and planning |
+| 20 | Marketplace Agent | Extension | 9 | Agent marketplace |
+| 21 | Plugin Agent | Extension | 13 | Plugin management |
+
+### Marketplace Agents (10 Seeded)
+
+| # | Agent | Category | Description |
+|---|-------|----------|-------------|
+| 1 | Weather Agent | Productivity | Weather forecasts and alerts |
+| 2 | Email Agent | Communication | Email management |
+| 3 | Music Agent | Entertainment | Music control |
+| 4 | Git Agent | Development | Git operations |
+| 5 | Calendar Agent | Productivity | Calendar management |
+| 6 | Docker Agent | Development | Docker container management |
+| 7 | Network Agent | System | Network diagnostics |
+| 8 | Translation Agent | Communication | Language translation |
+| 9 | Database Agent | Analytics | Database query |
+| 10 | Home Automation Agent | Automation | Smart home control |
+
+---
+
+## APPENDIX E: GLOSSARY
+
+| Term | Definition |
+|------|------------|
+| **Agent** | A specialized AI module that handles specific types of requests |
+| **Async** | Asynchronous execution; non-blocking operations |
+| **Cinematic Loader** | Animated startup sequence with progress tracking |
+| **Context** | User's current activity, focus level, and environment |
+| **DAG** | Directed Acyclic Graph; used for task dependency management |
+| **Dead Letter Queue** | Queue for messages that failed after max retries |
+| **Dispatcher** | Component that queues and distributes tasks to agents |
+| **Embedding** | Vector representation of text for semantic search |
+| **Event Bus** | Publish/subscribe messaging system |
+| **Focus Level** | User's concentration level (deep, focused, moderate, distracted, idle) |
+| **Hook** | Callback that fires on system events |
+| **Intent Routing** | Determining which agent should handle a request |
+| **LLM** | Large Language Model |
+| **Marketplace** | System for browsing and installing community agents |
+| **MCP** | Model Context Protocol |
+| **Message Broker** | Priority-queued message delivery system |
+| **Multi-Agent** | Architecture using multiple specialized agents |
+| **Namespace** | Isolated key space in shared state |
+| **Ollama** | Local LLM runner |
+| **Pattern** | Detected regularity in user behavior |
+| **Phase Tracker** | Component that tracks initialization phases |
+| **Plugin** | Lightweight extension that adds commands or services |
+| **Pub/Sub** | Publish/Subscribe messaging pattern |
+| **Replanning** | Regenerating a plan when conditions change |
+| **Router** | Component that routes requests to agents |
+| **Sandbox** | Restricted execution environment for plugins |
+| **Semantic Search** | Search by meaning, not keywords |
+| **Shared State** | Thread-safe key-value store for inter-agent data |
+| **Streaming** | Real-time character-by-character response display |
+| **Task** | A unit of work assigned to an agent |
+| **Terminal-Native** | Runs entirely in the terminal |
+| **Textual** | Python framework for terminal UIs |
+| **TTL** | Time-To-Live; automatic expiration for data |
+| **Vector** | Numerical representation of text for similarity comparison |
+| **Workflow** | Sequence of commands executed as a unit |
+| **Workflow Chain** | Multi-agent execution chain with dependencies |
+
+---
+
+## APPENDIX F: INDEX
+
+### A
+- Activity Classification — §42
+- Adaptive Triggers — §45
+- Agent Catalog — Appendix D
+- Agent Structure — §21
+- AI Manager — §22
+- Analytics Agent — §65
+- Async Execution — §40
+
+### B
+- BaseAgent — §21
+- Behavior Tracking — §47
+- Background Tasks — §76
+
+### C
+- Cinematic Loader — §11
+- CLI Mode — §12
+- Coding Agent — §58
+- Command Reference — Appendix A
+- Communication Bus — §29, §67
+- Configuration — §9, §26, §78
+- Context Awareness — §41
+- Conversation History — §55
+
+### D
+- Database Schema — §28, Appendix B
+- Debugging — §74
+- Dependency Graph — §38
+- Dispatcher — §24
+
+### E
+- Error Handling — §75
+- Event Bus — §29
+- Event Logger — §32
+
+### F
+- File Agent — §56
+- Focus Detection — §43
+
+### G
+- Goal Decomposition — §37
+
+### I
+- Installation — §8
+- Intent Router — §23
+- Inter-Agent Communication — §33
+
+### K
+- Knowledge Agent — §52
+
+### L
+- Learning Agent — §17, §46
+- LLM Provider — §25
+- Logging — §27
+
+### M
+- Marketplace Agent — §68
+- Memory Agent — §51
+- Message Broker — §30
+
+### N
+- Notification Agent — §61
+
+### P
+- Pattern Analysis — §48
+- Personality Agent — §66
+- Planning Engine — §36
+- Plugin Agent — §69
+- Plugin Development — §70
+- Plugin Sandbox — §71
+- Predictive Actions — §50
+
+### R
+- Recommendation Engine — §49
+- Roadmap — §81
+
+### S
+- Scheduler Agent — §60
+- Security Agent — §64
+- Semantic Search — §53
+- Session Management — §77
+- Shared State — §31
+- Streaming — §18
+
+### T
+- Task Dispatcher — §24
+- Task Executor — §39
+- Task Monitor — §16
+- Terminal Agent — §62
+- Terminal UI — §13
+- Theme System — §17
+- Troubleshooting — §74
+
+### V
+- Vector Storage — §54
+- Vision Agent — §63
+
+### W
+- Web Agent — §57
+- Workflow Chains — §35
+- Workflow Engine — §34
+
+---
+
+*End of NEXUS User Manual*
