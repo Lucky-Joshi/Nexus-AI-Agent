@@ -67,8 +67,8 @@ Default provider is **Ollama** (`http://localhost:11434`), with optional OpenAI 
 ## 4.1 Quick Setup
 
 ```bash
-git clone https://github.com/your-org/nexus.git
-cd nexus
+git clone https://github.com/Lucky-Joshi/Nexus-AI-Agent.git
+cd Nexus-AI-Agent
 python -m venv .venv
 
 # Linux/macOS

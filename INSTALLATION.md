@@ -10,8 +10,8 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/nexus.git
-cd nexus
+git clone https://github.com/Lucky-Joshi/Nexus-AI-Agent.git
+cd Nexus-AI-Agent
 
 # Create virtual environment (recommended)
 python -m venv .venv

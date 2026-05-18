@@ -30,8 +30,8 @@ NEXUS is a modular, agentic AI operating environment that runs entirely inside y
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/nexus.git
-cd nexus
+git clone https://github.com/Lucky-Joshi/Nexus-AI-Agent.git
+cd Nexus-AI-Agent
 
 # Install dependencies
 pip install -r requirements.txt

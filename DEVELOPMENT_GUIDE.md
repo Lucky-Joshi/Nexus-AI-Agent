@@ -4,8 +4,8 @@
 
 ```bash
 # Clone and setup
-git clone https://github.com/your-org/nexus.git
-cd nexus
+git clone https://github.com/Lucky-Joshi/Nexus-AI-Agent.git
+cd Nexus-AI-Agent
 python -m venv .venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
